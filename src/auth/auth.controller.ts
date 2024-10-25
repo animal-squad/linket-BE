@@ -21,7 +21,7 @@ export class AuthController {
         const user = req.user as User // 유저 정보 반환
         req.session['userId'] = user.email  // session에 userId 넣기
         req.session.save(()=>{
-            res.redirect('/')               // 메인으로 redirect
+            res.redirect('/main/storage')               // 기록물 조회 페이지로 이동
         })
     }
 

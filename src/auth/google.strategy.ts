@@ -18,7 +18,8 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
         })
     }
 
-    authorizationParams(): { [key: string]: string } {     // google api를 호출할 때 사용하는 refresh token 발급하는 함수
+    authorizationParams(): { [key: string]: string } {
+        // google api를 호출할 때 사용하는 refresh token 발급하는 함수
         return {
             access_type: 'offline',
             prompt: 'select_account',
@@ -26,8 +27,10 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     }
 
     async validate(accessToken: string, refreshToken: string, profile: Profile, done: VerifyCallback): Promise<void> {
+        console.log('run validate function')
         const { name, emails, provider, photos } = profile
-        const googleUserInfo = {   // google login으로 받아오는 정보
+        const googleUserInfo = {
+            // google login으로 받아오는 정보
             email: emails[0].value,
             name: name.givenName + ' ' + name.familyName,
             picture: photos[0].value,
@@ -36,11 +39,13 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
             refreshToken,
         }
         try {
-            const user = await this.authService.validateUser({ // user 정보 저장 여부 확인
+            const user = await this.authService.validateUser({
+                // user 정보 저장 여부 확인
                 email: googleUserInfo.email,
                 name: googleUserInfo.name,
                 photo: googleUserInfo.picture,
             })
+            console.log('run service function  ')
             return done(null, user)
         } catch (error) {
             return done(error)

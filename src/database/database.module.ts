@@ -4,7 +4,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 
 @Module({
     imports: [
-        TypeOrmModule.forRootAsync({ // TypeORM을 사용하여 PostgreSQL 연결
+        TypeOrmModule.forRootAsync({
+            // TypeORM을 사용하여 PostgreSQL 연결
             imports: [ConfigModule],
             useFactory: (configService: ConfigService) => ({
                 type: 'postgres',

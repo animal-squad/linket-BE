@@ -10,11 +10,13 @@ export class UserService {
         private userRepository: Repository<User>,
     ) {}
 
-    async findByEmail(email: string): Promise<User | undefined> {        // DB에서 email 저장 여부를 확인하는 함수
+    async findByEmail(email: string): Promise<User | undefined> {
+        // DB에서 email 저장 여부를 확인하는 함수
         return this.userRepository.findOne({ where: { email } })
     }
 
-    async create(user: Partial<User>): Promise<User> {                   // DB에 유저 정보를 저장하는 함수
+    async create(user: Partial<User>): Promise<User> {
+        // DB에 유저 정보를 저장하는 함수
         const newUser = this.userRepository.create(user)
         return this.userRepository.save(newUser)
     }

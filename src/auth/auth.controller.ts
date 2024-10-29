@@ -23,8 +23,6 @@ export class AuthController {
     googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
         const user = req.user as User // 유저 정보 반환
         req.session['userId'] = user.email // session에 userId 넣기
-        console.log('session save')
-        console.log(req.session)
         req.session.save(() => {
             res.redirect('http://localhost:5173/main/storage') // 메인으로 redirect
         })
@@ -34,10 +32,8 @@ export class AuthController {
     // @UseGuards(GoogleAuthGuard)
     async logout(@Req() req: Request, @Res() res: Response) {
         await new Promise<void>(() => {
-            console.log(req.session)
             req.session.destroy(() => {})
             res.clearCookie('connect.sid', { path: '/' })
-            console.log(req.session)
             res.redirect('http://localhost:5173/')
         })
     }

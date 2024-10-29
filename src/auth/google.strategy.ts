@@ -27,7 +27,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     }
 
     async validate(accessToken: string, refreshToken: string, profile: Profile, done: VerifyCallback): Promise<void> {
-        console.log('run validate function')
         const { name, emails, provider, photos } = profile
         const googleUserInfo = {
             // google login으로 받아오는 정보
@@ -45,7 +44,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
                 name: googleUserInfo.name,
                 photo: googleUserInfo.picture,
             })
-            console.log('run service function  ')
             return done(null, user)
         } catch (error) {
             return done(error)

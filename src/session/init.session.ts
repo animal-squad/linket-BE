@@ -18,7 +18,8 @@ export function setUpSession(app: INestApplication): void {
     // const redisStore = new RedisStore()
 
     app.use(
-        session({ // 세션 정보 설정
+        session({
+            // 세션 정보 설정
             secret: configService.get('SESSION_SECRET'),
             saveUninitialized: false,
             // store: redisStore,

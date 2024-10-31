@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+    userId Int @default(autoincrement()) @id
+    email String @unique
+    name String
+    photo String
+    links Link[]
+    buckets Bucket[]
+    tags Tag[]
+}
+
+model Bucket {
+    bucketId Int @default(autoincrement()) @id
+    user User @relation(fields: [userId], references: [userId])
+    userId Int
+    title String
+    links Int[]
+    createdAt DateTime @default(now())
+    isShared Boolean @default(false)
+    link Link[]
+}
+
+model Link {
+    linkId Int @default(autoincrement()) @id
+    bucket Bucket? @relation(fields: [bucketId], references: [bucketId])
+    bucketId Int?
+    user User @relation(fields: [userId], references: [userId])
+    userId Int
+    URL String
+    createdAt DateTime @default(now())
+    openedAt DateTime @default(now())
+    views Int @default(0)
+    tags Int[] @default([])
+    title String?
+}
+
+model Tag {
+    tagId Int @default(autoincrement()) @id
+    user User @relation(fields: [userId], references: [userId])
+    userId Int
+    tagName String
+    count Int @default(1)
+}

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Res, Session, UseGuards } from '@nestjs/common'
+import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common'
 import { Request, Response } from 'express'
 import { GoogleAuthGuard } from './auth.guard'
 
@@ -24,7 +24,7 @@ export class AuthController {
         const user = req.user as User // 유저 정보 반환
         req.session['userId'] = user.email // session에 userId 넣기
         req.session.save(() => {
-            res.redirect('http://localhost:5173/main/storage') // 메인으로 redirect
+            res.redirect(`${process.env.URL}/main/storage`) // 테스트용 임시 코드
         })
     }
 
@@ -34,7 +34,7 @@ export class AuthController {
         await new Promise<void>(() => {
             req.session.destroy(() => {})
             res.clearCookie('connect.sid', { path: '/' })
-            res.redirect('http://localhost:5173/')
+            res.redirect(`${process.env.URL}`) // 테스트용 임시 코드
         })
     }
 }

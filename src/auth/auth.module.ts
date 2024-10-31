@@ -4,7 +4,7 @@ import { AuthService } from './auth.service'
 import { AuthController } from './auth.controller'
 import { GoogleStrategy } from './google.strategy'
 import { UserModule } from '../user/user.module'
-import { ConfigModule, ConfigService } from '@nestjs/config'
+import { ConfigModule } from '@nestjs/config'
 import { SessionSerializer } from './session.serializer'
 
 @Module({

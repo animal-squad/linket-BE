@@ -28,16 +28,22 @@ model Bucket {
     user User @relation(fields: [userId], references: [userId])
     userId Int
     title String
-    links Int[]
     createdAt DateTime @default(now())
     isShared Boolean @default(false)
-    link Link[]
+    bucketLink BucketLink[]
+}
+
+model BucketLink {
+    bucketId Int
+    linkId Int
+    bucket Bucket @relation(fields: [bucketId], references: [bucketId])
+    link Link @relation(fields: [linkId], references: [linkId])
+
+    @@id([bucketId, linkId])
 }
 
 model Link {
     linkId Int @default(autoincrement()) @id
-    bucket Bucket? @relation(fields: [bucketId], references: [bucketId])
-    bucketId Int?
     user User @relation(fields: [userId], references: [userId])
     userId Int
     URL String
@@ -46,6 +52,7 @@ model Link {
     views Int @default(0)
     tags Int[] @default([])
     title String?
+    bucketLink BucketLink[]
 }
 
 model Tag {
@@ -54,4 +61,6 @@ model Tag {
     userId Int
     tagName String
     count Int @default(1)
+
+    @@unique([userId, tagName])
 }

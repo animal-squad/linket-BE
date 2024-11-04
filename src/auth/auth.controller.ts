@@ -4,13 +4,13 @@ import { GoogleAuthGuard } from './auth.guard'
 
 interface User {
     // User entity
-    id: string
+    userId: string
     email: string
     name: string
     photo: string
 }
 
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController {
     @Get('google') // google login 시도시
     @UseGuards(GoogleAuthGuard)
@@ -21,8 +21,6 @@ export class AuthController {
     @Get('google/callback') // google login 후 세션 저장
     @UseGuards(GoogleAuthGuard)
     googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
-        const user = req.user as User // 유저 정보 반환
-        req.session['userId'] = user.email // session에 userId 넣기
         req.session.save(() => {
             res.redirect(`${process.env.URL}/main/storage`) // 테스트용 임시 코드
         })

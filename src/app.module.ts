@@ -9,7 +9,6 @@ import { PassportModule } from '@nestjs/passport'
 import { PrismaModule } from '../prisma/prisma.module'
 import { BucketModule } from './bucket/bucket.module'
 import { LinkModule } from './link/link.module'
-import { TagModule } from './tag/tag.module'
 
 @Module({
     imports: [
@@ -23,7 +22,6 @@ import { TagModule } from './tag/tag.module'
         PrismaModule,
         BucketModule,
         LinkModule,
-        TagModule,
     ],
     controllers: [AppController],
     providers: [AppService],

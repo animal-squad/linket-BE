@@ -20,7 +20,6 @@ model User {
     photo String
     links Link[]
     buckets Bucket[]
-    tags Tag[]
 }
 
 model Bucket {
@@ -50,17 +49,7 @@ model Link {
     createdAt DateTime @default(now())
     openedAt DateTime @default(now())
     views Int @default(0)
-    tags Int[] @default([])
+    tags String[] @default([])
     title String?
     bucketLink BucketLink[]
-}
-
-model Tag {
-    tagId Int @default(autoincrement()) @id
-    user User @relation(fields: [userId], references: [userId])
-    userId Int
-    tagName String
-    count Int @default(1)
-
-    @@unique([userId, tagName])
 }

@@ -6,6 +6,9 @@ export class CreateBucketDto {
 
     @ApiProperty({ description: 'Links of the bucket' })
     links: InputLinkDto[]
+
+    @ApiProperty({ description: 'User email' })
+    email: string
 }
 
 export class InputLinkDto {
@@ -13,5 +16,5 @@ export class InputLinkDto {
     URL: string
 
     @ApiProperty({ description: 'Link content' })
-    content?: JSON
+    content?: string
 }

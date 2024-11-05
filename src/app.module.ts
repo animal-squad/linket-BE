@@ -7,6 +7,8 @@ import { UserModule } from './user/user.module'
 import config from './config/config'
 import { PassportModule } from '@nestjs/passport'
 import { PrismaModule } from '../prisma/prisma.module'
+import { BucketModule } from './bucket/bucket.module'
+import { LinkModule } from './link/link.module'
 
 @Module({
     imports: [
@@ -18,6 +20,8 @@ import { PrismaModule } from '../prisma/prisma.module'
         AuthModule,
         UserModule,
         PrismaModule,
+        BucketModule,
+        LinkModule,
     ],
     controllers: [AppController],
     providers: [AppService],

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../../prisma/prisma.service'
 import { CreateBucketDto } from '../bucket/dto/bucket.dto'
 import { UpdateLinkDto } from './dto/link.dto'
+import { getTime } from '../utils/time.util'
 
 @Injectable()
 export class LinkService {
@@ -10,16 +11,18 @@ export class LinkService {
     async createManyAndMapping(createBucketDto: CreateBucketDto, userId: number, bucketId: number) {
         return await this.prisma.$transaction(async tx => {
             await tx.link.createMany({
-                data: createBucketDto.links.map(url => ({
-                    URL: url,
+                data: createBucketDto.links.map(link => ({
+                    URL: link.URL,
                     userId: userId,
+                    createdAt: getTime(),
+                    openedAt: getTime(),
                 })),
             })
             const createdLinks = await tx.link.findMany({
                 where: {
                     userId,
                     URL: {
-                        in: createBucketDto.links,
+                        in: createBucketDto.links.map(link => link.URL),
                     },
                 },
                 select: {

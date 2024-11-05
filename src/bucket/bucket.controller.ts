@@ -12,10 +12,9 @@ export class BucketController {
         private readonly bucketService: BucketService,
         private linkService: LinkService,
     ) {}
-    //  @GetUser() user: User
+
     @Post('/')
-    async create(@Body() createBucketDto: CreateBucketDto, @Res() res: Response) {
-        const user = { userId: 1 }
+    async create(@Body() createBucketDto: CreateBucketDto, @GetUser() user: User, @Res() res: Response) {
         const bucketId = await this.bucketService.create(createBucketDto, user.userId)
         const linksId = this.linkService.createManyAndMapping(createBucketDto, user.userId, bucketId)
 

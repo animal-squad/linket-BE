@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { CreateBucketDto } from './dto/bucket.dto'
 import { PrismaService } from '../../prisma/prisma.service'
 import { LinkService } from '../link/link.service'
+import { getTime } from '../utils/time.util'
 
 @Injectable()
 export class BucketService {
@@ -15,6 +16,7 @@ export class BucketService {
             data: {
                 title: createBucketDto.title,
                 userId: userId,
+                createdAt: getTime(),
             },
         })
 

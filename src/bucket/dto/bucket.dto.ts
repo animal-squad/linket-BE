@@ -5,5 +5,13 @@ export class CreateBucketDto {
     title: string
 
     @ApiProperty({ description: 'Links of the bucket' })
-    links: string[]
+    links: InputLinkDto[]
+}
+
+export class InputLinkDto {
+    @ApiProperty({ description: 'Link URL' })
+    URL: string
+
+    @ApiProperty({ description: 'Link content' })
+    content?: JSON
 }

@@ -1,9 +1,5 @@
 pipeline {
     agent any
-    options {
-        timestamps()
-        buildDiscarder(logRotator(numToKeepStr: '10'))
-    }
     environment {
         DOCKER_REPO = "ghcr.io/animal-squad/project-s-be"
         GIT_BRANCH = "${env.BRANCH_NAME}"

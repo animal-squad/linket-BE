@@ -82,6 +82,7 @@ pipeline {
                     -n ${DEPLOYMENT_NAMESPACE} ${DEPLOYMENT_CONTAINER_NAME}=${DOCKER_REPO}:${GIT_COMMIT_SHORT}
                     kubectl rollout status deployment/${DEPLOYMENT_NAME} -n ${DEPLOYMENT_NAMESPACE}
                     """
+                    }
                 }
             }
         }

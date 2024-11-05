@@ -6,8 +6,8 @@ pipeline {
         DEPLOYMENT_NAMESPACE = "${params.DEPLOYMENT_NAMESPACE}"
         DEPLOYMENT_NAME = "${params.DEPLOYMENT_NAME}"
         DEPLOYMENT_CONTAINER_NAME = "${params.DEPLOYMENT_CONTAINER_NAME}"
-        KANIKO_POD_YAML = '/var/jenkins_home/kaniko/job-kaniko-backend.yaml' // Kaniko Pod YAML 파일 경로
-        KANIKO_POD_NAME = 'kaniko-backend' // 값 설정할 부분
+        KANIKO_JOB_YAML = '/var/jenkins_home/kaniko/job-kaniko-backend.yaml' // Kaniko Pod YAML 파일 경로
+        KANIKO_JOB_NAME = 'kaniko-backend' // 값 설정할 부분
         JENKINS_NAMESPACE = 'devops' // Kaniko Pod를 실행할 네임스페이스
     }
     parameters {
@@ -37,7 +37,7 @@ pipeline {
                 script {
                     // Kaniko YAML 파일에서 이미지 태그 업데이트
                     sh """
-                    sed -i 's|--destination=.*|--destination=${DOCKER_REPO}:${GIT_COMMIT_SHORT}",|' ${KANIKO_POD_YAML}
+                    sed -i 's|--destination=.*|--destination=${DOCKER_REPO}:${GIT_COMMIT_SHORT}",|' ${KANIKO_JOB_YAML}
                     """
                 }
             }
@@ -47,8 +47,8 @@ pipeline {
                 script {
                     // 기존 Kaniko Pod 삭제 후 새로운 Kaniko Pod 배포
                     sh """
-                    kubectl delete job ${KANIKO_POD_NAME} -n ${JENKINS_NAMESPACE} --ignore-not-found
-                    kubectl create -f ${KANIKO_POD_YAML} -n ${JENKINS_NAMESPACE}
+                    kubectl delete job ${KANIKO_JOB_NAME} -n ${JENKINS_NAMESPACE} --ignore-not-found
+                    kubectl create -f ${KANIKO_JOB_YAML} -n ${JENKINS_NAMESPACE}
                     """
                 }
             }
@@ -56,18 +56,20 @@ pipeline {
         stage('Wait for Kaniko Build') {
             steps {
                 script {
-                    // Kaniko Pod가 완료될 때까지 대기
+                    // Kaniko Job가 완료될 때까지 대기
                     timeout(time: 15, unit: 'MINUTES') {
                         waitUntil {
-                            def status = sh(script: "kubectl get job ${KANIKO_POD_NAME} -n ${JENKINS_NAMESPACE} -o jsonpath='{.status.phase}'", returnStdout: true).trim()
-                            echo "Kaniko Job Status: ${status}"
-                            return (status == 'Succeeded') || (status == 'Failed')
+                            def succeeded = sh(script: "kubectl get job ${KANIKO_JOB_NAME} -n ${JENKINS_NAMESPACE} -o jsonpath='{.status.succeeded}'", returnStdout: true).trim()
+                            def failed = sh(script: "kubectl get job ${KANIKO_JOB_NAME} -n ${JENKINS_NAMESPACE} -o jsonpath='{.status.failed}'", returnStdout: true).trim()
+                            echo "Kaniko Job Succeeded: ${succeeded}, Failed: ${failed}"
+                            return (succeeded.toInteger() >= 1) || (failed.toInteger() >= 1)
                         }
                     }
                     // 최종 상태 확인
-                    def finalStatus = sh(script: "kubectl get job ${KANIKO_POD_NAME} -n ${JENKINS_NAMESPACE} -o jsonpath='{.status.phase}'", returnStdout: true).trim()
-                    if (finalStatus != 'Succeeded') {
-                        error "Kaniko build failed with status: ${finalStatus}"
+                    def finalStatus = sh(script: "kubectl get job ${KANIKO_JOB_NAME} -n ${JENKINS_NAMESPACE} -o jsonpath='{.status.conditions[?(@.type=="Complete")].status}'", returnStdout: true).trim()
+                    def finalFailed = sh(script: "kubectl get job ${KANIKO_JOB_NAME} -n ${JENKINS_NAMESPACE} -o jsonpath='{.status.conditions[?(@.type=="Failed")].status}'", returnStdout: true).trim()
+                    if (finalStatus != 'True') {
+                        error "Kaniko build failed."
                     }
                 }
             }

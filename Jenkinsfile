@@ -17,7 +17,7 @@ pipeline {
         string(name: 'DEPLOYMENT_NAME', defaultValue: 'backend-deployment', description: '배포할 Deployment 이름') // 설정  
         string(name: 'DEPLOYMENT_CONTAINER_NAME', defaultValue: 'backend-container', description: 'Deployment 내 컨테이너 이름') // 설
     }
-    stages {ß
+    stages {
         stage('Checkout Source Code') {
             steps {
                 checkout scm

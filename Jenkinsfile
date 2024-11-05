@@ -5,7 +5,7 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10'))
     }
     environment {
-        DOCKER_REPO = "${DOCKER_USERNAME}/${REGISTRY_NAME}"
+        DOCKER_REPO = "ghcr.io/animal-squad/project-s-be"
         GIT_BRANCH = "${env.BRANCH_NAME}"
         GIT_COMMIT_SHORT = ''
         GIT_COMMIT_MESSAGE = ''

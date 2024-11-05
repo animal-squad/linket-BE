@@ -61,8 +61,12 @@ pipeline {
                         waitUntil {
                             def succeeded = sh(script: "kubectl get job ${KANIKO_JOB_NAME} -n ${JENKINS_NAMESPACE} -o jsonpath='{.status.succeeded}'", returnStdout: true).trim()
                             def failed = sh(script: "kubectl get job ${KANIKO_JOB_NAME} -n ${JENKINS_NAMESPACE} -o jsonpath='{.status.failed}'", returnStdout: true).trim()
-                            echo "Kaniko Job Succeeded: ${succeeded}, Failed: ${failed}"
-                            return (succeeded.toInteger() >= 1) || (failed.toInteger() >= 1)
+                            // 빈 문자열 처리
+                            def succeededCount = succeeded ? succeeded.toInteger() : 0
+                            def failedCount = failed ? failed.toInteger() : 0
+
+                            echo "Kaniko Job Succeeded: ${succeededCount}, Failed: ${failedCount}"
+                            return (succeededCount >= 1) || (failedCount >= 1)
                         }
                     }
                     // 최종 상태 확인

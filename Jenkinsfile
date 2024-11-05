@@ -53,7 +53,7 @@ pipeline {
                 script {
                     // 기존 Kaniko Pod 삭제 후 새로운 Kaniko Pod 배포
                     sh """
-                    kubectl delete pod ${KANIKO_POD_NAME} -n ${JENKINS_NAMESPACE} --ignore-not-found
+                    kubectl delete job ${KANIKO_POD_NAME} -n ${JENKINS_NAMESPACE} --ignore-not-found
                     kubectl create -f ${KANIKO_POD_YAML} -n ${JENKINS_NAMESPACE}
                     """
                 }

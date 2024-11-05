@@ -13,7 +13,7 @@ pipeline {
         JENKINS_NAMESPACE = 'devops' // Kaniko Pod를 실행할 네임스페이스
     }
     parameters {
-        string(name: 'DEPLOYMENT_NAMESPACE', defaultValue: 'service', description: '배포할 Kuber정netes 네임스페이스') // 설정
+        string(name: 'DEPLOYMENT_NAMESPACE', defaultValue: 'service', description: '배포할 Kubernetes 네임스페이스') // 설정
         string(name: 'DEPLOYMENT_NAME', defaultValue: 'backend-deployment', description: '배포할 Deployment 이름') // 설정  
         string(name: 'DEPLOYMENT_CONTAINER_NAME', defaultValue: 'backend-container', description: 'Deployment 내 컨테이너 이름') // 설
     }
@@ -28,7 +28,6 @@ pipeline {
                     echo "Git Commit Message: ${env.GIT_COMMIT_MESSAGE}"
                 }
             }
-        음
         // stage('Unit Tests') {
         //     steps {
         //         sh 'make test' // 유닛 테스트 실행 stage 현재 없음

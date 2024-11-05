@@ -3,8 +3,6 @@ pipeline {
     environment {
         DOCKER_REPO = "ghcr.io/animal-squad/project-s-be"
         GIT_BRANCH = "${env.BRANCH_NAME}"
-        GIT_COMMIT_SHORT = ''
-        GIT_COMMIT_MESSAGE = ''
         DEPLOYMENT_NAMESPACE = "${params.DEPLOYMENT_NAMESPACE}"
         DEPLOYMENT_NAME = "${params.DEPLOYMENT_NAME}"
         DEPLOYMENT_CONTAINER_NAME = "${params.DEPLOYMENT_CONTAINER_NAME}"

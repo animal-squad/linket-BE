@@ -28,12 +28,12 @@ pipeline {
                     echo "Git Commit Message: ${env.GIT_COMMIT_MESSAGE}"
                 }
             }
-        }
-        stage('Unit Tests') {
-            steps {
-                sh 'make test' // 유닛 테스트 실행 (프로젝트에 맞게 수정)
-            }
-        }
+        음
+        // stage('Unit Tests') {
+        //     steps {
+        //         sh 'make test' // 유닛 테스트 실행 stage 현재 없음
+        //     }
+        // }
         stage('Update Kaniko YAML') {
             steps {
                 script {

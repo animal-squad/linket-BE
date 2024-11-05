@@ -13,9 +13,9 @@ pipeline {
         JENKINS_NAMESPACE = 'devops' // Kaniko Pod를 실행할 네임스페이스
     }
     parameters {
-        string(name: 'service', defaultValue: 'default', description: '배포할 Kuber정netes 네임스페이스') // 설정
-        string(name: 'backend-deployment', defaultValue: 'my-app', description: '배포할 Deployment 이름') // 설정  
-        string(name: 'backend-container', defaultValue: 'my-container', description: 'Deployment 내 컨테이너 이름') // 설
+        string(name: 'DEPLOYMENT_NAMESPACE', defaultValue: 'service', description: '배포할 Kuber정netes 네임스페이스') // 설정
+        string(name: 'DEPLOYMENT_NAME', defaultValue: 'backend-deployment', description: '배포할 Deployment 이름') // 설정  
+        string(name: 'DEPLOYMENT_CONTAINER_NAME', defaultValue: 'backend-container', description: 'Deployment 내 컨테이너 이름') // 설
     }
     stages {
         stage('Checkout Source Code') {

@@ -42,7 +42,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy Kaniko Pod') {
+        stage('Deploy Kaniko Job') {
             steps {
                 script {
                     // 기존 Kaniko Pod 삭제 후 새로운 Kaniko Pod 배포

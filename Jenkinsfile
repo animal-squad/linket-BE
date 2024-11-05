@@ -12,11 +12,11 @@ pipeline {
         DEPLOYMENT_NAMESPACE = "${params.DEPLOYMENT_NAMESPACE}"
         DEPLOYMENT_NAME = "${params.DEPLOYMENT_NAME}"
         DEPLOYMENT_CONTAINER_NAME = "${params.DEPLOYMENT_CONTAINER_NAME}"
-        KANIKO_POD_YAML = '/var/jenkins_home/kaniko/kaniko-backend.yaml' // Kaniko Pod YAML 파일 경로
+        KANIKO_POD_YAML = '/var/jenkins_home/kaniko/job-kaniko-backend.yaml' // Kaniko Pod YAML 파일 경로
         KANIKO_POD_NAME = 'kaniko-backend' // 값 설정할 부분
         JENKINS_NAMESPACE = 'devops' // Kaniko Pod를 실행할 네임스페이스
     }
-    parameters {분
+    parameters {
         string(name: 'service', defaultValue: 'default', description: '배포할 Kuber정netes 네임스페이스') // 설정
         string(name: 'backend-deployment', defaultValue: 'my-app', description: '배포할 Deployment 이름') // 설정  
         string(name: 'backend-container', defaultValue: 'my-container', description: 'Deployment 내 컨테이너 이름') // 설

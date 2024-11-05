@@ -66,8 +66,8 @@ pipeline {
                         }
                     }
                     // 최종 상태 확인
-                    def finalStatus = sh(script: "kubectl get job ${KANIKO_JOB_NAME} -n ${JENKINS_NAMESPACE} -o jsonpath='{.status.conditions[?(@.type=="Complete")].status}'", returnStdout: true).trim()
-                    def finalFailed = sh(script: "kubectl get job ${KANIKO_JOB_NAME} -n ${JENKINS_NAMESPACE} -o jsonpath='{.status.conditions[?(@.type=="Failed")].status}'", returnStdout: true).trim()
+                    def finalStatus = sh(script: "kubectl get job ${KANIKO_JOB_NAME} -n ${JENKINS_NAMESPACE} -o jsonpath='{.status.conditions[?(@.type==\"Complete\")].status}'", returnStdout: true).trim()
+                    def finalFailed = sh(script: "kubectl get job ${KANIKO_JOB_NAME} -n ${JENKINS_NAMESPACE} -o jsonpath='{.status.conditions[?(@.type==\"Failed\")].status}'", returnStdout: true).trim()
                     if (finalStatus != 'True') {
                         error "Kaniko build failed."
                     }

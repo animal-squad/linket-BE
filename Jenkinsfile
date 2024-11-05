@@ -59,13 +59,13 @@ pipeline {
                     // Kaniko Pod가 완료될 때까지 대기
                     timeout(time: 15, unit: 'MINUTES') {
                         waitUntil {
-                            def status = sh(script: "kubectl get pod ${KANIKO_POD_NAME} -n ${JENKINS_NAMESPACE} -o jsonpath='{.status.phase}'", returnStdout: true).trim()
-                            echo "Kaniko Pod Status: ${status}"
+                            def status = sh(script: "kubectl get job ${KANIKO_POD_NAME} -n ${JENKINS_NAMESPACE} -o jsonpath='{.status.phase}'", returnStdout: true).trim()
+                            echo "Kaniko Job Status: ${status}"
                             return (status == 'Succeeded') || (status == 'Failed')
                         }
                     }
                     // 최종 상태 확인
-                    def finalStatus = sh(script: "kubectl get pod ${KANIKO_POD_NAME} -n ${JENKINS_NAMESPACE} -o jsonpath='{.status.phase}'", returnStdout: true).trim()
+                    def finalStatus = sh(script: "kubectl get job ${KANIKO_POD_NAME} -n ${JENKINS_NAMESPACE} -o jsonpath='{.status.phase}'", returnStdout: true).trim()
                     if (finalStatus != 'Succeeded') {
                         error "Kaniko build failed with status: ${finalStatus}"
                     }

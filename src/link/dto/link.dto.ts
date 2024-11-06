@@ -12,9 +12,6 @@ class LinkDto {
 }
 
 export class UpdateLinkDto {
-    @ApiProperty({ description: 'User id' })
-    userId: number
-
     @ApiProperty({ description: 'Links id with tags and title' })
     links: LinkDto[]
 }

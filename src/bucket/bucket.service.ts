@@ -14,12 +14,11 @@ export class BucketService {
     async create(createBucketDto: CreateBucketDto, userId: number) {
         const bucket = await this.prisma.bucket.create({
             data: {
-                title: createBucketDto.title,
+                title: createBucketDto.title || new Date().toLocaleString('ko-KR') + '에 생성된 Bucket',
                 userId: userId,
                 createdAt: getTime(),
             },
         })
-
         return bucket.bucketId
     }
 }

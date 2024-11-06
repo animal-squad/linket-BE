@@ -1,10 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res } from '@nestjs/common'
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, Query } from '@nestjs/common'
 import { Response } from 'express'
 import { BucketService } from './bucket.service'
 import { CreateBucketDto } from './dto/bucket.dto'
 import { LinkService } from '../link/link.service'
 import { UserService } from '../user/user.service'
 import { NotRegisterUserException } from '../user/user.exception'
+import { GetUser } from '../user/user.decorater'
+import { User, Bucket } from '@prisma/client'
+import { PaginatedBucketDto, PaginationQueryDto } from '../utils/pagination.dto'
 
 @Controller('bucket')
 export class BucketController {
@@ -28,23 +31,8 @@ export class BucketController {
         // TODO: AI API 호출
     }
 
-    // @Get()
-    // findAll() {
-    //   return this.bucketService.findAll();
-    // }
-    //
-    // @Get(':id')
-    // findOne(@Param('id') id: string) {
-    //   return this.bucketService.findOne(+id);
-    // }
-    //
-    // @Patch(':id')
-    // update(@Param('id') id: string, @Body() updateBucketDto: UpdateBucketDto) {
-    //   return this.bucketService.update(+id, updateBucketDto);
-    // }
-    //
-    // @Delete(':id')
-    // remove(@Param('id') id: string) {
-    //   return this.bucketService.remove(+id);
-    // }
+    @Get('/')
+    async getAll(@Query() query: PaginationQueryDto, @GetUser() user: User): Promise<PaginatedBucketDto<Bucket>> {
+        return await this.bucketService.findAll(user.userId, query)
+    }
 }

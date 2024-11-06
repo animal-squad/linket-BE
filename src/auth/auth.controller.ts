@@ -22,7 +22,7 @@ export class AuthController {
     @UseGuards(GoogleAuthGuard)
     googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
         req.session.save(() => {
-            res.redirect(`${process.env.URL}/main/storage`) // 테스트용 임시 코드
+            res.redirect(`${process.env.URL}/main/bucket`) // 테스트용 임시 코드
         })
     }
 

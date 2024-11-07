@@ -9,7 +9,7 @@ import { GetUser } from '../user/user.decorater'
 import { User, Bucket } from '@prisma/client'
 import { PaginatedBucketDto, PaginationQueryDto } from '../utils/pagination.dto'
 
-@Controller('bucket')
+@Controller('api/bucket')
 export class BucketController {
     constructor(
         private readonly bucketService: BucketService,
@@ -34,5 +34,11 @@ export class BucketController {
     @Get('/')
     async getAll(@Query() query: PaginationQueryDto, @GetUser() user: User): Promise<PaginatedBucketDto<Bucket>> {
         return await this.bucketService.findAll(user.userId, query)
+    }
+
+    @Get('/:id')
+    async getById(@Param('id') id: string, @GetUser() user: User) {
+        const bucketId = Number(id)
+        return await this.bucketService.findOne(bucketId, user.userId)
     }
 }

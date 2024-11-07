@@ -5,6 +5,7 @@ import { LinkService } from '../link/link.service'
 import { getTime } from '../utils/time.util'
 import { PaginatedBucketDto, PaginationQueryDto } from '../utils/pagination.dto'
 import { Bucket } from '@prisma/client'
+import { BucketUnauthorizedUserException } from '../user/user.exception'
 
 @Injectable()
 export class BucketService {
@@ -18,6 +19,7 @@ export class BucketService {
             data: {
                 title: createBucketDto.title || new Date().toLocaleString('ko-KR') + '에 생성된 Bucket',
                 userId: userId,
+                linkCount: createBucketDto.links.length,
                 createdAt: getTime(),
             },
         })
@@ -45,5 +47,33 @@ export class BucketService {
         ])
 
         return new PaginatedBucketDto(buckets, page, take, totalBuckets)
+    }
+
+    async findOne(bucketId: number, userId: number) {
+        const bucket = await this.prisma.bucket.findUnique({
+            where: {
+                bucketId: bucketId,
+            },
+            include: {
+                bucketLink: {
+                    select: {
+                        link: true,
+                    },
+                },
+            },
+        })
+        if (bucket.isShared === false && userId !== bucket.userId) {
+            throw new BucketUnauthorizedUserException()
+        }
+        const bucketResponse = {
+            userId: bucket.userId,
+            title: bucket.title,
+            linkCount: bucket.linkCount,
+            createdAt: bucket.createdAt,
+            isShared: bucket.isShared,
+            links: bucket.bucketLink.map(data => data.link),
+        }
+
+        return bucketResponse
     }
 }

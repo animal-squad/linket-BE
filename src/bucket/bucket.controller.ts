@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res, Query } from '@nestjs/common'
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, Query, Put } from '@nestjs/common'
 import { Response } from 'express'
 import { BucketService } from './bucket.service'
 import { CreateBucketDto } from './dto/bucket.dto'
@@ -40,5 +40,11 @@ export class BucketController {
     async getById(@Param('id') id: string, @GetUser() user: User) {
         const bucketId = Number(id)
         return await this.bucketService.findOne(bucketId, user.userId)
+    }
+
+    @Put('/:id/share')
+    async updateIsShared(@Param('id') id: string, @Body('permission') permission: boolean) {
+        const bucketId = Number(id)
+        return await this.bucketService.updateShare(bucketId, permission)
     }
 }

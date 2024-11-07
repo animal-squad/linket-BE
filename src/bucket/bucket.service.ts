@@ -76,4 +76,20 @@ export class BucketService {
 
         return bucketResponse
     }
+
+    async updateShare(bucketId: number, permission: boolean) {
+        const bucket = await this.prisma.bucket.update({
+            where: {
+                bucketId: bucketId,
+            },
+            data: {
+                isShared: permission,
+            },
+        })
+
+        return {
+            isShared: bucket.isShared,
+            shareURL: bucket.isShared ? `${process.env.URL}/bucket/${bucketId}` : '',
+        }
+    }
 }

@@ -35,4 +35,10 @@ export class BucketController {
     async getAll(@Query() query: PaginationQueryDto, @GetUser() user: User): Promise<PaginatedBucketDto<Bucket>> {
         return await this.bucketService.findAll(user.userId, query)
     }
+
+    @Get('/:id')
+    async getById(@Param('id') id: string, @GetUser() user: User) {
+        const bucketId = Number(id)
+        return await this.bucketService.findOne(bucketId, user.userId)
+    }
 }

@@ -27,6 +27,7 @@ model Bucket {
     user User @relation(fields: [userId], references: [userId])
     userId Int
     title String
+    linkCount Int @default(0)
     createdAt DateTime @default(now())
     isShared Boolean @default(false)
     bucketLink BucketLink[]

@@ -9,7 +9,7 @@ import { GetUser } from '../user/user.decorater'
 import { User, Bucket } from '@prisma/client'
 import { PaginatedBucketDto, PaginationQueryDto } from '../utils/pagination.dto'
 
-@Controller('bucket')
+@Controller('api/bucket')
 export class BucketController {
     constructor(
         private readonly bucketService: BucketService,

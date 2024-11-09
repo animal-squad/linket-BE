@@ -1,18 +1,19 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../../prisma/prisma.service'
-import { CreateBucketDto } from '../bucket/dto/bucket.dto'
-import { UpdateLinkDto } from './dto/link.dto'
+import { CreateLinkDto, UpdateLinkDto } from './dto/link.dto'
 import { getTime } from '../utils/time.util'
 
 @Injectable()
 export class LinkService {
     constructor(private prisma: PrismaService) {}
 
-    async createManyAndMapping(createBucketDto: CreateBucketDto, userId: number, bucketId: number) {
+    async createManyAndMapping(createLinkDto: CreateLinkDto[], userId: number, bucketId: number) {
         return await this.prisma.$transaction(async tx => {
             await tx.link.createMany({
-                data: createBucketDto.links.map(link => ({
+                data: createLinkDto.map(link => ({
                     URL: link.URL,
+                    title: link.title,
+                    tags: link.tags || [],
                     userId: userId,
                     createdAt: getTime(),
                     openedAt: getTime(),
@@ -22,7 +23,7 @@ export class LinkService {
                 where: {
                     userId,
                     URL: {
-                        in: createBucketDto.links.map(link => link.URL),
+                        in: createLinkDto.map(link => link.URL),
                     },
                 },
                 select: {

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { CreateBucketDto } from './dto/bucket.dto'
+import { BucketDto, CreateBucketDto } from './dto/bucket.dto'
 import { PrismaService } from '../../prisma/prisma.service'
 import { LinkService } from '../link/link.service'
 import { getTime } from '../utils/time.util'
@@ -91,5 +91,17 @@ export class BucketService {
             isShared: bucket.isShared,
             shareURL: bucket.isShared ? `${process.env.URL}/bucket/${bucketId}` : '',
         }
+    }
+
+    async createPastedBucket(bucket: BucketDto, userId: number) {
+        const newBucket = await this.prisma.bucket.create({
+            data: {
+                title: bucket.title + ' 의 복사본',
+                linkCount: bucket.linkCount,
+                userId: userId,
+            },
+        })
+
+        return await this.linkService.createManyAndMapping(bucket.links, userId, newBucket.bucketId)
     }
 }

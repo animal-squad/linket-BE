@@ -12,7 +12,7 @@ export class PaginationQueryDto {
 }
 
 export class PaginatedBucketDto<T> {
-    data: T[]
+    buckets: T[]
     meta: {
         totalBuckets: number
         totalPages: number
@@ -22,8 +22,8 @@ export class PaginatedBucketDto<T> {
         take: number
     }
 
-    constructor(data: T[], page: number, take: number, totalBuckets: number) {
-        this.data = data
+    constructor(buckets: T[], page: number, take: number, totalBuckets: number) {
+        this.buckets = buckets
         this.meta = {
             totalBuckets,
             totalPages: Math.ceil(totalBuckets / take),

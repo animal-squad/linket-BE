@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger'
 
 class InputLinkDto {
     @ApiProperty({ description: 'Link Id' })
-    linkId: number
+    linkId: string
 
     @ApiProperty({ description: 'Link title' })
     title?: string
@@ -29,7 +29,7 @@ export class CreateLinkDto {
 
 export class LinkDto {
     @ApiProperty({ description: 'Link id' })
-    linkId: number
+    linkId: string
 
     @ApiProperty({ description: 'Link title' })
     title?: string

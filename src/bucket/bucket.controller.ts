@@ -32,25 +32,22 @@ export class BucketController {
     }
 
     @Get('/')
-    async getAll(@Query() query: PaginationQueryDto , @GetUser() user: User): Promise<PaginatedBucketDto<Bucket>> {
+    async getAll(@Query() query: PaginationQueryDto, @GetUser() user: User): Promise<PaginatedBucketDto<Bucket>> {
         return await this.bucketService.findAll(user.userId, query)
     }
 
     @Get('/:id')
-    async getById(@Param('id') id: string , @GetUser() user: User) {
-        const bucketId = Number(id)
+    async getById(@Param('id') bucketId: string, @GetUser() user: User) {
         return await this.bucketService.findOne(bucketId, user.userId)
     }
 
     @Put('/:id/share')
-    async updateIsShared(@Param('id') id: string, @Body('permission') permission: boolean) {
-        const bucketId = Number(id)
+    async updateIsShared(@Param('id') bucketId: string, @Body('permission') permission: boolean) {
         return await this.bucketService.updateShare(bucketId, permission)
     }
 
     @Post('/:id/paste')
     async addPasteBucket(@Param('id') id: string, @Body('bucket') bucket: BucketDto, @GetUser() user: User) {
-        const bucketId = Number(id)
         return await this.bucketService.createPastedBucket(bucket, user.userId)
     }
 }

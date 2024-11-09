@@ -7,7 +7,7 @@ import { getTime } from '../utils/time.util'
 export class LinkService {
     constructor(private prisma: PrismaService) {}
 
-    async createManyAndMapping(createLinkDto: CreateLinkDto[], userId: number, bucketId: number) {
+    async createManyAndMapping(createLinkDto: CreateLinkDto[], userId: number, bucketId: string) {
         return await this.prisma.$transaction(async tx => {
             await tx.link.createMany({
                 data: createLinkDto.map(link => ({

@@ -41,3 +41,17 @@ export class BucketUnauthorizedUserException extends HttpException {
         )
     }
 }
+
+export class NotBucketOwnerException extends HttpException {
+    constructor() {
+        super(
+            {
+                name: 'NotBucketOwner',
+                statusCode: HttpStatus.UNAUTHORIZED,
+                errorCode: 604,
+                message: 'Only Owner can make changes',
+            },
+            HttpStatus.UNAUTHORIZED,
+        )
+    }
+}

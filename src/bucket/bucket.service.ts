@@ -5,7 +5,7 @@ import { LinkService } from '../link/link.service'
 import { getTime } from '../utils/time.util'
 import { PaginatedBucketDto, PaginationQueryDto } from '../utils/pagination.dto'
 import { Bucket } from '@prisma/client'
-import { BucketUnauthorizedUserException } from '../user/user.exception'
+import { BucketUnauthorizedUserException, NotBucketOwnerException } from '../user/user.exception'
 
 @Injectable()
 export class BucketService {
@@ -105,5 +105,24 @@ export class BucketService {
         })
 
         return await this.linkService.createManyAndMapping(bucket.links, userId, newBucket.bucketId)
+    }
+
+    async updateBucketTitle(title: string, bucketId: string, userId: number) {
+        const bucket = await this.prisma.bucket.findUnique({
+            where: {
+                bucketId: bucketId,
+            },
+        })
+        if (bucket.userId !== userId) {
+            throw new NotBucketOwnerException()
+        }
+        return this.prisma.bucket.update({
+            where: {
+                bucketId: bucketId,
+            },
+            data: {
+                title: title,
+            },
+        })
     }
 }

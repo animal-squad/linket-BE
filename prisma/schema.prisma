@@ -23,7 +23,7 @@ model User {
 }
 
 model Bucket {
-    bucketId Int @default(autoincrement()) @id
+    bucketId String @default(nanoid(8)) @id @db.VarChar(8)
     user User @relation(fields: [userId], references: [userId])
     userId Int
     title String
@@ -34,8 +34,8 @@ model Bucket {
 }
 
 model BucketLink {
-    bucketId Int
-    linkId Int
+    bucketId String @db.VarChar(8)
+    linkId String @db.VarChar(8)
     bucket Bucket @relation(fields: [bucketId], references: [bucketId])
     link Link @relation(fields: [linkId], references: [linkId])
 
@@ -43,7 +43,7 @@ model BucketLink {
 }
 
 model Link {
-    linkId Int @default(autoincrement()) @id
+    linkId String @default(nanoid(8)) @id @db.VarChar(8)
     user User @relation(fields: [userId], references: [userId])
     userId Int
     URL String

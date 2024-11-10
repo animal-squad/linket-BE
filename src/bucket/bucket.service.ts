@@ -49,7 +49,7 @@ export class BucketService {
         return new PaginatedBucketDto(buckets, page, take, totalBuckets)
     }
 
-    async findOne(bucketId: number, userId: number) {
+    async findOne(bucketId: string, userId: number) {
         const bucket = await this.prisma.bucket.findUnique({
             where: {
                 bucketId: bucketId,
@@ -65,19 +65,21 @@ export class BucketService {
         if (bucket.isShared === false && userId !== bucket.userId) {
             throw new BucketUnauthorizedUserException()
         }
+
         const bucketResponse = {
             userId: bucket.userId,
             title: bucket.title,
             linkCount: bucket.linkCount,
             createdAt: bucket.createdAt,
             isShared: bucket.isShared,
+            isMine: bucket.userId === userId,
             links: bucket.bucketLink.map(data => data.link),
         }
 
         return bucketResponse
     }
 
-    async updateShare(bucketId: number, permission: boolean) {
+    async updateShare(bucketId: string, permission: boolean) {
         const bucket = await this.prisma.bucket.update({
             where: {
                 bucketId: bucketId,

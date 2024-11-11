@@ -50,4 +50,9 @@ export class BucketController {
     async addPasteBucket(@Param('id') id: string, @Body('bucket') bucket: BucketDto, @GetUser() user: User) {
         return await this.bucketService.createPastedBucket(bucket, user.userId)
     }
+
+    @Put('/:id')
+    async updateTitle(@Param('id') bucketId: string, @Body('title') title: string, @GetUser() user: User) {
+        return await this.bucketService.updateBucketTitle(title, bucketId, user.userId)
+    }
 }

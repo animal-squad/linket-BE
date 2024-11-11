@@ -114,7 +114,9 @@ export class BucketService {
             },
         })
 
-        return await this.linkService.createManyAndMapping(bucket.links, userId, newBucket.bucketId)
+        await this.linkService.createManyAndMapping(bucket.links, userId, newBucket.bucketId)
+
+        return newBucket.bucketId
     }
 
     async updateBucketTitle(title: string, bucketId: string, userId: number) {

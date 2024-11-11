@@ -57,8 +57,7 @@ export class BucketController {
     }
 
     @Delete('/:id')
-    async deleteBucekt(@Param('id') bucketId: string) {
-        const userId = 2
-        return await this.bucketService.deleteBucket(bucketId, userId)
+    async deleteBucekt(@Param('id') bucketId: string, @GetUser() user: User) {
+        return await this.bucketService.deleteBucket(bucketId, user.userId)
     }
 }

@@ -55,4 +55,9 @@ export class BucketController {
     async updateTitle(@Param('id') bucketId: string, @Body('title') title: string, @GetUser() user: User) {
         return await this.bucketService.updateBucketTitle(title, bucketId, user.userId)
     }
+
+    @Delete('/:id')
+    async deleteBucekt(@Param('id') bucketId: string, @GetUser() user: User) {
+        return await this.bucketService.deleteBucket(bucketId, user.userId)
+    }
 }

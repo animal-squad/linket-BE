@@ -8,6 +8,8 @@ import { NotRegisterUserException } from '../user/user.exception'
 import { GetUser } from '../user/user.decorater'
 import { User, Bucket } from '@prisma/client'
 import { PaginatedBucketDto, PaginationQueryDto } from '../utils/pagination.dto'
+import { HttpService } from '@nestjs/axios'
+import { firstValueFrom } from 'rxjs'
 
 @Controller('api/bucket')
 export class BucketController {
@@ -15,6 +17,7 @@ export class BucketController {
         private readonly bucketService: BucketService,
         private linkService: LinkService,
         private readonly userService: UserService,
+        private httpService: HttpService,
     ) {}
 
     @Post('/')
@@ -24,11 +27,16 @@ export class BucketController {
             throw new NotRegisterUserException()
         } else {
             const bucketId = await this.bucketService.create(createBucketDto, user.userId)
-            const linksId = this.linkService.createManyAndMapping(createBucketDto.links, user.userId, bucketId)
+            const links = await this.linkService.createManyAndMapping(createBucketDto.links, user.userId, bucketId)
 
-            return res.status(201).json(bucketId)
+            res.status(201).send(bucketId)
+
+            const aiResponse = await firstValueFrom(this.httpService.post(`${process.env.URL}/ai/categorize`))
+
+            const updateLinkDto = aiResponse.data
+
+            return this.linkService.updateTagAndTitle(updateLinkDto)
         }
-        // TODO: AI API 호출
     }
 
     @Get('/')

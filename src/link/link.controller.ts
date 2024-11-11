@@ -8,8 +8,7 @@ export class LinkController {
     constructor(private readonly linkService: LinkService) {}
 
     @Put('/update')
-    async updateTagsAndTitle(@Body() updateLinkDto: UpdateLinkDto, @Res() res: Response) {
-        await this.linkService.updateTagAndTitle(updateLinkDto)
-        return res.sendStatus(201)
+    async updateTagsAndTitle(@Body() updateLinkDto: UpdateLinkDto) {
+        return this.linkService.updateTagAndTitle(updateLinkDto)
     }
 }

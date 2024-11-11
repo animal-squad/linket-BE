@@ -28,6 +28,7 @@ export class LinkService {
                 },
                 select: {
                     linkId: true,
+                    URL: true,
                 },
             })
             await tx.bucketLink.createMany({
@@ -36,6 +37,13 @@ export class LinkService {
                     bucketId: bucketId,
                 })),
             })
+
+            const linkContentMap = new Map(createLinkDto.map(link => [link.URL, link.content || null]))
+            return createdLinks.map(link => ({
+                linkId: link.linkId,
+                URL: link.URL,
+                content: linkContentMap.get(link.URL),
+            }))
         })
     }
 

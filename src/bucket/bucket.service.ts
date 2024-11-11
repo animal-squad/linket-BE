@@ -15,7 +15,7 @@ export class BucketService {
         private readonly linkService: LinkService,
     ) {}
 
-    private async getBucket(bucketId: string){
+    private async getBucket(bucketId: string) {
         const bucket = await this.prisma.bucket.findUnique({
             where: {
                 bucketId: bucketId,
@@ -28,7 +28,7 @@ export class BucketService {
                 },
             },
         })
-        if(!bucket){
+        if (!bucket) {
             throw new BucketNotFoundException()
         }
         return bucket

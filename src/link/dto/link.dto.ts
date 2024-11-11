@@ -25,6 +25,9 @@ export class CreateLinkDto {
 
     @ApiProperty({ description: 'Tags of link' })
     tags?: string[]
+
+    @ApiProperty({ description: 'Content of link' })
+    content?: string
 }
 
 export class LinkDto {

@@ -1,14 +1,12 @@
-import { Body, Controller, Put, Res } from '@nestjs/common'
-import { Response } from 'express'
+import { Controller, Param, Put } from '@nestjs/common'
 import { LinkService } from './link.service'
-import { UpdateLinkDto } from './dto/link.dto'
 
 @Controller('api/link')
 export class LinkController {
     constructor(private readonly linkService: LinkService) {}
 
-    @Put('/update')
-    async updateTagsAndTitle(@Body() updateLinkDto: UpdateLinkDto) {
-        return this.linkService.updateTagAndTitle(updateLinkDto)
+    @Put('/:id/view')
+    async updateViews(@Param('id') linkId: string) {
+        return await this.linkService.updateViewsAndOpenedAt(linkId)
     }
 }

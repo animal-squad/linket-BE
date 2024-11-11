@@ -62,4 +62,18 @@ export class LinkService {
             ),
         )
     }
+
+    async updateViewsAndOpenedAt(linkId: string) {
+        return this.prisma.link.update({
+            where: {
+                linkId: linkId,
+            },
+            data: {
+                views: {
+                    increment: 1,
+                },
+                openedAt: getTime(),
+            },
+        })
+    }
 }

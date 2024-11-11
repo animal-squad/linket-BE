@@ -6,6 +6,7 @@ import { getTime } from '../utils/time.util'
 import { PaginatedBucketDto, PaginationQueryDto } from '../utils/pagination.dto'
 import { Bucket } from '@prisma/client'
 import { BucketUnauthorizedUserException, NotBucketOwnerException } from '../user/user.exception'
+import { BucketNotFoundException } from './bucket.exception'
 
 @Injectable()
 export class BucketService {
@@ -13,6 +14,25 @@ export class BucketService {
         private prisma: PrismaService,
         private readonly linkService: LinkService,
     ) {}
+
+    private async getBucket(bucketId: string){
+        const bucket = await this.prisma.bucket.findUnique({
+            where: {
+                bucketId: bucketId,
+            },
+            include: {
+                bucketLink: {
+                    select: {
+                        link: true,
+                    },
+                },
+            },
+        })
+        if(!bucket){
+            throw new BucketNotFoundException()
+        }
+        return bucket
+    }
 
     async create(createBucketDto: CreateBucketDto, userId: number) {
         const bucket = await this.prisma.bucket.create({
@@ -50,18 +70,8 @@ export class BucketService {
     }
 
     async findOne(bucketId: string, userId: number) {
-        const bucket = await this.prisma.bucket.findUnique({
-            where: {
-                bucketId: bucketId,
-            },
-            include: {
-                bucketLink: {
-                    select: {
-                        link: true,
-                    },
-                },
-            },
-        })
+        const bucket = await this.getBucket(bucketId)
+
         if (bucket.isShared === false && userId !== bucket.userId) {
             throw new BucketUnauthorizedUserException()
         }
@@ -124,5 +134,31 @@ export class BucketService {
                 title: title,
             },
         })
+    }
+
+    async deleteBucket(bucketId: string, userId: number) {
+        const bucket = await this.getBucket(bucketId)
+        if (bucket.userId !== userId) {
+            throw new NotBucketOwnerException()
+        }
+        const linkIds = bucket.bucketLink.map(data => data.link.linkId)
+        const deleteRelation = this.prisma.bucketLink.deleteMany({
+            where: {
+                bucketId: bucketId,
+            },
+        })
+        const deleteLinks = this.prisma.link.deleteMany({
+            where: {
+                linkId: {
+                    in: linkIds,
+                },
+            },
+        })
+        const deleteBucket = this.prisma.bucket.delete({
+            where: {
+                bucketId: bucketId,
+            },
+        })
+        return await this.prisma.$transaction([deleteRelation, deleteLinks, deleteBucket])
     }
 }

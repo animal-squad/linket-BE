@@ -20,38 +20,37 @@ model User {
     photo String
     links Link[]
     buckets Bucket[]
-    tags Tag[]
 }
 
 model Bucket {
-    bucketId Int @default(autoincrement()) @id
+    bucketId String @default(nanoid(8)) @id @db.VarChar(8)
     user User @relation(fields: [userId], references: [userId])
     userId Int
     title String
-    links Int[]
+    linkCount Int @default(0)
     createdAt DateTime @default(now())
     isShared Boolean @default(false)
-    link Link[]
+    bucketLink BucketLink[]
+}
+
+model BucketLink {
+    bucketId String @db.VarChar(8)
+    linkId String @db.VarChar(8)
+    bucket Bucket @relation(fields: [bucketId], references: [bucketId])
+    link Link @relation(fields: [linkId], references: [linkId])
+
+    @@id([bucketId, linkId])
 }
 
 model Link {
-    linkId Int @default(autoincrement()) @id
-    bucket Bucket? @relation(fields: [bucketId], references: [bucketId])
-    bucketId Int?
+    linkId String @default(nanoid(8)) @id @db.VarChar(8)
     user User @relation(fields: [userId], references: [userId])
     userId Int
     URL String
     createdAt DateTime @default(now())
     openedAt DateTime @default(now())
     views Int @default(0)
-    tags Int[] @default([])
+    tags String[] @default([])
     title String?
-}
-
-model Tag {
-    tagId Int @default(autoincrement()) @id
-    user User @relation(fields: [userId], references: [userId])
-    userId Int
-    tagName String
-    count Int @default(1)
+    bucketLink BucketLink[]
 }

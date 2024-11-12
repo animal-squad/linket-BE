@@ -26,27 +26,30 @@ export class BucketController {
         if (!user) {
             throw new NotRegisterUserException()
         } else {
+            console.log(createBucketDto)
             const bucketId = await this.bucketService.create(createBucketDto, user.userId)
             const links = await this.linkService.createManyAndMapping(createBucketDto.links, user.userId, bucketId)
-
+            console.log(links)
+            console.log({ links: links })
             res.status(201).send(bucketId)
 
             const aiResponse = await firstValueFrom(this.httpService.post(`${process.env.URL}/ai/categorize`, { links : links }, { timeout : 60000 }))
 
             const updateLinkDto = aiResponse.data
 
+
             return this.linkService.updateTagAndTitle(updateLinkDto)
         }
     }
 
     @Get('/')
-    async getAll(@Query() query: PaginationQueryDto, @GetUser() user: User): Promise<PaginatedBucketDto<Bucket>> {
-        return await this.bucketService.findAll(user.userId, query)
+    async getAll(@Query() query: PaginationQueryDto, @GetUser() userId: number): Promise<PaginatedBucketDto<Bucket>> {
+        return await this.bucketService.findAll(userId, query)
     }
 
     @Get('/:id')
-    async getById(@Param('id') bucketId: string, @GetUser() user: User) {
-        return await this.bucketService.findOne(bucketId, user.userId)
+    async getById(@Param('id') bucketId: string, @GetUser() userId: number) {
+        return await this.bucketService.findOne(bucketId, userId)
     }
 
     @Put('/:id/share')
@@ -55,17 +58,17 @@ export class BucketController {
     }
 
     @Post('/:id/paste')
-    async addPasteBucket(@Param('id') id: string, @Body('bucket') bucket: BucketDto, @GetUser() user: User) {
-        return await this.bucketService.createPastedBucket(bucket, user.userId)
+    async addPasteBucket(@Param('id') id: string, @Body('bucket') bucket: BucketDto, @GetUser() userId: number) {
+        return await this.bucketService.createPastedBucket(bucket, userId)
     }
 
     @Put('/:id')
-    async updateTitle(@Param('id') bucketId: string, @Body('title') title: string, @GetUser() user: User) {
-        return await this.bucketService.updateBucketTitle(title, bucketId, user.userId)
+    async updateTitle(@Param('id') bucketId: string, @Body('title') title: string, @GetUser() userId: number) {
+        return await this.bucketService.updateBucketTitle(title, bucketId, userId)
     }
 
     @Delete('/:id')
-    async deleteBucekt(@Param('id') bucketId: string, @GetUser() user: User) {
-        return await this.bucketService.deleteBucket(bucketId, user.userId)
+    async deleteBucekt(@Param('id') bucketId: string, @GetUser() userId: number) {
+        return await this.bucketService.deleteBucket(bucketId, userId)
     }
 }

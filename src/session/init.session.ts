@@ -29,7 +29,7 @@ export async function setUpSession(app: INestApplication): Promise<void> {
             resave: false,
             cookie: {
                 httpOnly: true,
-                secure: true,
+                secure: false,
                 maxAge: 600000,
                 path: '/',
                 sameSite: 'lax',

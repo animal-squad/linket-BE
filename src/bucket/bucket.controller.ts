@@ -33,8 +33,8 @@ export class BucketController {
             console.log({ links: links })
             res.status(201).send(bucketId)
 
-            const aiResponse = await firstValueFrom(this.httpService.post(`${process.env.URL}/ai/categorize`, { links: links }, { timeout: 60000 }))
-            console.log(aiResponse.data)
+            const aiResponse = await firstValueFrom(this.httpService.post(`${process.env.URL}/ai/categorize`, { links : links }, { timeout : 60000 }))
+
             const updateLinkDto = aiResponse.data
 
 

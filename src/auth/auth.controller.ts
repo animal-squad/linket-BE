@@ -22,7 +22,7 @@ export class AuthController {
     @UseGuards(GoogleAuthGuard)
     googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
         req.session.save(() => {
-            res.redirect(`${process.env.URL}/main/bucket`) // 테스트용 임시 코드
+            res.send(req.user)
         })
     }
 
@@ -32,7 +32,6 @@ export class AuthController {
         await new Promise<void>(() => {
             req.session.destroy(() => {})
             res.clearCookie('connect.sid', { path: '/' })
-            res.redirect(`${process.env.URL}`) // 테스트용 임시 코드
         })
     }
 }

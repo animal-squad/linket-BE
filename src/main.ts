@@ -10,6 +10,7 @@ async function bootstrap() {
         credentials: true,
         methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
         allowedHeaders: ['Content-Type', 'Accept', 'Authorization'],
+        exposedHeaders: ['set-cookie'],
     })
     const config = new DocumentBuilder().setTitle('Test').setDescription('swagger API documentation test').setVersion('1.0').build()
     await setUpSession(app)

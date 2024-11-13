@@ -33,7 +33,7 @@ export async function setUpSession(app: INestApplication): Promise<void> {
                 maxAge: 600000,
                 path: '/',
                 sameSite: 'none',
-                domain: configService.get('URL'),
+                domain: configService.get('DOMAIN'),
             },
         }),
     )

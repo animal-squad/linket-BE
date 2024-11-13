@@ -47,8 +47,8 @@ export class BucketService {
     }
 
     async findAll(userId: number, query: PaginationQueryDto): Promise<PaginatedBucketDto<Bucket>> {
-        const page = query.page ?? 1
-        const take = query.take ?? 10
+        const page = Number(query.page) ?? 1
+        const take = Number(query.take) ?? 10
 
         const [buckets, totalBuckets] = await Promise.all([
             this.prisma.bucket.findMany({

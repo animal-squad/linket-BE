@@ -19,9 +19,10 @@ export class SessionSerializer extends PassportSerializer {
     }
 
     async deserializeUser(userId: number, done: (err: Error, payload: any) => void) {
+        console.log('excute deserializer')
         try {
             const cachedUser = await this.redisClient.get(`userId:${userId}`)
-
+            console.log(cachedUser)
             if (cachedUser) {
                 done(null, JSON.parse(cachedUser))
                 return
@@ -32,6 +33,7 @@ export class SessionSerializer extends PassportSerializer {
             await this.redisClient.setex(`userId:${userId}`, 3600, JSON.stringify(user.userId))
             done(null, user.userId)
         } catch (error) {
+            console.log(error)
             done(error, null)
         }
     }

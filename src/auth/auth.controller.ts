@@ -17,7 +17,9 @@ export class AuthController {
     @Get('google/callback') // google login 후 세션 저장
     @UseGuards(GoogleAuthGuard)
     googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
+        console.log('callback cookie', req.headers.cookie)
         return req.session.save(() => {
+
             res.redirect(`${process.env.URL}/main/bucket`)
         })
     }

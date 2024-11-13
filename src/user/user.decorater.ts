@@ -4,7 +4,7 @@ import { NotLoginException } from './user.exception'
 
 export const GetUser = createParamDecorator((data: any, ctx: ExecutionContext): User => {
     const request = ctx.switchToHttp().getRequest()
-    console.log('header', request.headers)
+    console.log('Decorator cookie', request)
 
     return request.session.passport.user
 })

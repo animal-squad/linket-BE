@@ -30,8 +30,11 @@ async function bootstrap() {
         if (Array.isArray(value)) return value.join(', ')
         return ''
     })
+    morgan.token('req-cookie', req => {
+        return req.headers.cookie || '-'
+    })
+    app.use(morgan('[:method] :url :status :res[content-length] - :response-time ms ReqCookie=:req-cookie ResCookie=:header[set-cookie]'))
 
-    app.use(morgan(':method :url :status :res[content-length] - :response-time ms :header[set-cookie]'))
     const config = new DocumentBuilder().setTitle('Test').setDescription('swagger API documentation test').setVersion('1.0').build()
     const redisClient = app.get('REDIS_CLIENT')
     await setUpSession(app, redisClient)

@@ -26,6 +26,7 @@ export async function setUpSession(app: INestApplication, redisClient: Redis): P
                 sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
                 domain: `.${configService.get('DOMAIN')}`,
             },
+            proxy: true,
         }),
     )
 }

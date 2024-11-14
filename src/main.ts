@@ -1,13 +1,17 @@
 import { NestFactory } from '@nestjs/core'
+import { NestExpressApplication } from '@nestjs/platform-express'
 import { AppModule } from './app.module'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 import { setUpSession } from './session/init.session'
 import * as morgan from 'morgan'
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule)
+    const app = await NestFactory.create<NestExpressApplication>(AppModule)
+
+    app.set('trust proxy', true)
+
     app.enableCors({
-        origin: `${process.env.URL}`,
+        origin: [`${process.env.URL}`, `https://www.${process.env.DOMAIN}`],
         credentials: true,
         methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
         allowedHeaders: ['Content-Type', 'Accept', 'Authorization'],

@@ -24,7 +24,7 @@ export async function setUpSession(app: INestApplication, redisClient: Redis): P
                 maxAge: 600000,
                 path: '/',
                 sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-                domain: `.${configService.get('DOMAIN')}`,
+                domain: configService.get('DOMAIN'),
             },
             proxy: true,
         }),

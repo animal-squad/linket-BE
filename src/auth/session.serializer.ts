@@ -14,7 +14,6 @@ export class SessionSerializer extends PassportSerializer {
     }
 
     serializeUser(user: any, done: (err: Error, user: any) => void): any {
-        console.log('serializeUser의 값', user)
         done(null, user.userId)
     }
 

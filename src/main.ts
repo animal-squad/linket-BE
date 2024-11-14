@@ -29,7 +29,8 @@ async function bootstrap() {
 
     app.use(morgan(':method :url :status :res[content-length] - :response-time ms :header[set-cookie]'))
     const config = new DocumentBuilder().setTitle('Test').setDescription('swagger API documentation test').setVersion('1.0').build()
-    await setUpSession(app)
+    const redisClient = app.get('REDIS_CLIENT')
+    await setUpSession(app, redisClient)
 
     const document = SwaggerModule.createDocument(app, config)
     SwaggerModule.setup('api', app, document)

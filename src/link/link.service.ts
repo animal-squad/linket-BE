@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../../prisma/prisma.service'
 import { CreateLinkDto, UpdateLinkDto } from './dto/link.dto'
-import { getTime } from '../utils/time.util'
 
 @Injectable()
 export class LinkService {
@@ -15,8 +14,8 @@ export class LinkService {
                     title: link.title,
                     tags: link.tags || [],
                     userId: userId,
-                    createdAt: getTime(),
-                    openedAt: getTime(),
+                    createdAt: new Date(),
+                    openedAt: new Date(),
                 })),
             })
             const createdLinks = await tx.link.findMany({
@@ -72,7 +71,7 @@ export class LinkService {
                 views: {
                     increment: 1,
                 },
-                openedAt: getTime(),
+                openedAt: new Date(),
             },
         })
     }

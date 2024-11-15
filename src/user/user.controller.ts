@@ -8,8 +8,6 @@ export class UserController {
     constructor(private readonly userService: UserService) {}
     @Get()
     async getUser(@Req() req: Request, @GetUser() userId: number) {
-        const user = await this.userService.findById(userId)
-        console.log(user)
-        return user
+        return await this.userService.findById(userId)
     }
 }

@@ -29,7 +29,7 @@ export class AuthController {
             const userId = user.userId
             req.session.destroy(() => {})
             res.clearCookie('connect.sid', { path: '/' })
-            this.redisClient.del(`userId:${userId}`)
+            this.redisClient.del(`user:${userId}`)
             res.redirect(`${process.env.URL}`)
         })
     }

@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common'
 import { BucketDto, CreateBucketDto } from './dto/bucket.dto'
 import { PrismaService } from '../../prisma/prisma.service'
 import { LinkService } from '../link/link.service'
-import { getTime } from '../utils/time.util'
 import { PaginatedBucketDto, PaginationQueryDto } from '../utils/pagination.dto'
 import { Bucket } from '@prisma/client'
 import { BucketUnauthorizedUserException, NotBucketOwnerException } from '../user/user.exception'
@@ -37,10 +36,10 @@ export class BucketService {
     async create(createBucketDto: CreateBucketDto, userId: number) {
         const bucket = await this.prisma.bucket.create({
             data: {
-                title: createBucketDto.title || new Date().toLocaleString('ko-KR') + '에 생성된 Bucket',
+                title: createBucketDto.title || new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) + '에 생성된 바구니',
                 userId: userId,
                 linkCount: createBucketDto.links.length,
-                createdAt: getTime(),
+                createdAt: new Date(),
             },
         })
         return bucket.bucketId
@@ -108,7 +107,7 @@ export class BucketService {
     async createPastedBucket(bucket: BucketDto, userId: number) {
         const newBucket = await this.prisma.bucket.create({
             data: {
-                title: bucket.title + ' 의 복사본',
+                title: bucket.title + '의 복사본',
                 linkCount: bucket.linkCount,
                 userId: userId,
             },

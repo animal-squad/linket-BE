@@ -21,7 +21,7 @@ export async function setUpSession(app: INestApplication, redisClient: Redis): P
             cookie: {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                maxAge: 600000,
+                maxAge: 60 * 60 * 1000,
                 path: '/',
                 sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
                 domain: configService.get('DOMAIN'),

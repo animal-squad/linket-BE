@@ -5,7 +5,7 @@ import { BucketDto, CreateBucketDto } from './dto/bucket.dto'
 import { LinkService } from '../link/link.service'
 import { UserService } from '../user/user.service'
 import { NotRegisterUserException } from '../user/user.exception'
-import { GetUser } from '../user/user.decorater'
+import { GetUser } from '../user/user.decorator'
 import { User, Bucket } from '@prisma/client'
 import { PaginatedBucketDto, PaginationQueryDto } from '../utils/pagination.dto'
 import { HttpService } from '@nestjs/axios'
@@ -33,10 +33,9 @@ export class BucketController {
             console.log({ links: links })
             res.status(201).send(bucketId)
 
-            const aiResponse = await firstValueFrom(this.httpService.post(`${process.env.URL}/ai/categorize`, { links : links }, { timeout : 60000 }))
+            const aiResponse = await firstValueFrom(this.httpService.post(`${process.env.URL}/ai/categorize`, { links: links }, { timeout: 60000 }))
 
             const updateLinkDto = aiResponse.data
-
 
             return this.linkService.updateTagAndTitle(updateLinkDto)
         }
@@ -53,7 +52,7 @@ export class BucketController {
     }
 
     @Put('/:id/share')
-    async updateIsShared(@Param('id') bucketId: string, @Body('permission') permission: boolean) {
+    async updateIsShared(@Param('id') bucketId: string, @Body('permission') permission: boolean, @GetUser() userId: number) {
         return await this.bucketService.updateShare(bucketId, permission)
     }
 

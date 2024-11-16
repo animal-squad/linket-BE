@@ -1,6 +1,5 @@
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common'
-import { GetUser } from './user.decorater'
-import { User } from '@prisma/client'
+import { Controller, Get, Req } from '@nestjs/common'
+import { GetUser } from './user.decorator'
 import { UserService } from './user.service'
 
 @Controller('api/user')
@@ -9,5 +8,10 @@ export class UserController {
     @Get()
     async getUser(@Req() req: Request, @GetUser() userId: number) {
         return await this.userService.findById(userId)
+    }
+
+    @Get('check')
+    getLoginInfo(@GetUser() userId: number) {
+        return
     }
 }

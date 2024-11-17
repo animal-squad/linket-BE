@@ -5,11 +5,11 @@ export class NotRegisterUserException extends HttpException {
         super(
             {
                 name: 'NotRegisterUser',
-                statusCode: HttpStatus.UNAUTHORIZED,
+                statusCode: HttpStatus.NOT_FOUND,
                 errorCode: 601,
                 message: 'Email is not registered',
             },
-            HttpStatus.UNAUTHORIZED,
+            HttpStatus.NOT_FOUND,
         )
     }
 }
@@ -33,11 +33,11 @@ export class BucketUnauthorizedUserException extends HttpException {
         super(
             {
                 name: 'BucketUnauthorizedUser',
-                statusCode: HttpStatus.UNAUTHORIZED,
+                statusCode: HttpStatus.FORBIDDEN,
                 errorCode: 603,
                 message: 'Only authorized users can access',
             },
-            HttpStatus.UNAUTHORIZED,
+            HttpStatus.FORBIDDEN,
         )
     }
 }
@@ -47,11 +47,11 @@ export class NotBucketOwnerException extends HttpException {
         super(
             {
                 name: 'NotBucketOwner',
-                statusCode: HttpStatus.UNAUTHORIZED,
+                statusCode: HttpStatus.FORBIDDEN,
                 errorCode: 604,
                 message: 'Only Owner can make changes',
             },
-            HttpStatus.UNAUTHORIZED,
+            HttpStatus.FORBIDDEN,
         )
     }
 }

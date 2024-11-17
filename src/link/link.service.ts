@@ -77,4 +77,15 @@ export class LinkService {
             },
         })
     }
+
+    async updateTitle(linkId: string, title: string){
+        return this.prisma.link.update({
+            where: {
+                linkId: linkId,
+            },
+            data: {
+                title: title,
+            },
+        })
+    }
 }

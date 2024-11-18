@@ -8,14 +8,15 @@ export class LinkService {
 
     async createManyAndMapping(createLinkDto: CreateLinkDto[], userId: number, bucketId: string) {
         return await this.prisma.$transaction(async tx => {
+            const time = new Date()
             await tx.link.createMany({
                 data: createLinkDto.map(link => ({
                     URL: link.URL,
                     title: link.title,
                     tags: link.tags || [],
                     userId: userId,
-                    createdAt: new Date(),
-                    openedAt: new Date(),
+                    createdAt: time,
+                    openedAt: time,
                 })),
             })
             const createdLinks = await tx.link.findMany({
@@ -24,6 +25,7 @@ export class LinkService {
                     URL: {
                         in: createLinkDto.map(link => link.URL),
                     },
+                    createdAt: time,
                 },
                 select: {
                     linkId: true,
@@ -72,6 +74,17 @@ export class LinkService {
                     increment: 1,
                 },
                 openedAt: new Date(),
+            },
+        })
+    }
+
+    async updateTitle(linkId: string, title: string){
+        return this.prisma.link.update({
+            where: {
+                linkId: linkId,
+            },
+            data: {
+                title: title,
             },
         })
     }

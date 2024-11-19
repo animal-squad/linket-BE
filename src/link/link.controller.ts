@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post, Put } from '@nestjs/common'
+import { Body, Controller, Param, Put } from '@nestjs/common'
 import { LinkService } from './link.service'
 import { GetUser } from '../user/user.decorator'
 
@@ -11,8 +11,13 @@ export class LinkController {
         return await this.linkService.updateViewsAndOpenedAt(linkId)
     }
 
-    @Post('/:id/title')
+    @Put('/:id/title')
     async updateTitle(@Param('id') linkId: string, @Body('title') title: string, @GetUser() userId: number) {
         return await this.linkService.updateTitle(linkId, title)
+    }
+
+    @Put('/:id/tag')
+    async updateTags(@Param('id') linkId: string, @Body('tags') tags: string[], @GetUser() userId: number) {
+        return await this.linkService.updateTags(linkId, tags)
     }
 }

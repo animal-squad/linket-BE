@@ -2,9 +2,18 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { LinkController } from './link.controller'
 import { LinkService } from './link.service'
 import { describe } from 'node:test'
+import { HttpService } from '@nestjs/axios'
+import { CreateLinkDto } from './dto/link.dto'
+import { of } from 'rxjs'
 
 const mockLinkService = {
     updateTags: jest.fn(),
+    createOne: jest.fn(),
+    updateTagAndTitle: jest.fn(),
+}
+
+const mockHttpService = {
+    post: jest.fn(),
 }
 
 const mockRequest = {
@@ -31,6 +40,7 @@ const mockLink = {
 describe('LinkController', () => {
     let linkController: LinkController
     let linkService: LinkService
+    let httpService: HttpService
 
     beforeEach(async () => {
         jest.clearAllMocks()
@@ -39,11 +49,15 @@ describe('LinkController', () => {
 
         const module: TestingModule = await Test.createTestingModule({
             controllers: [LinkController],
-            providers: [{ provide: LinkService, useValue: mockLinkService }],
+            providers: [
+                { provide: LinkService, useValue: mockLinkService },
+                { provide: HttpService, useValue: mockHttpService },
+            ],
         }).compile()
 
         linkController = module.get<LinkController>(LinkController)
         linkService = module.get<LinkService>(LinkService)
+        httpService = module.get<HttpService>(HttpService)
     })
 
     afterAll(async () => {
@@ -66,6 +80,48 @@ describe('LinkController', () => {
 
             expect(linkService.updateTags).toHaveBeenCalledWith(mockLink.linkId, mockTags)
             expect(result).toEqual(updatedLink)
+        })
+    })
+
+    describe('createOneLink', () => {
+        it('should create a link', async () => {
+            const createLinkDto: CreateLinkDto = {
+                URL: 'test-url',
+            }
+
+            const createdLink = {
+                linkId: 'test-linkId',
+                URL: 'test-url',
+                content: null,
+            }
+
+            const aiRequest = {
+                URL: 'test-url',
+                linkId: 'test-linkId',
+                content: null,
+            }
+
+            const aiResponse = {
+                data: {
+                    links: [
+                        {
+                            linkId: 'test-linkId',
+                            tags: ['tag1', 'tag2'],
+                            title: 'ai title',
+                        },
+                    ],
+                },
+            }
+
+            mockLinkService.createOne.mockResolvedValue(createdLink)
+            mockHttpService.post.mockReturnValue(of(aiResponse))
+            mockLinkService.updateTagAndTitle.mockResolvedValue(aiResponse.data)
+
+            const result = await linkController.createLink(createLinkDto, userId)
+
+            expect(mockLinkService.createOne).toHaveBeenCalledWith(createLinkDto, userId)
+            expect(mockHttpService.post).toHaveBeenCalledWith(expect.any(String), { links: [aiRequest] }, { timeout: 60000 })
+            expect(mockLinkService.updateTagAndTitle).toHaveBeenCalledWith(aiResponse.data)
         })
     })
 })

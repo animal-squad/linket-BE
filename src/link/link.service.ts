@@ -88,4 +88,16 @@ export class LinkService {
             },
         })
     }
+
+    async updateTags(linkId: string, tags: string[]){
+        // TODO :  변동내역 로깅
+        return this.prisma.link.update({
+            where: {
+                linkId: linkId,
+            },
+            data: {
+                tags: tags,
+            },
+        })
+    }
 }

@@ -78,7 +78,7 @@ export class LinkService {
         })
     }
 
-    async updateTitle(linkId: string, title: string){
+    async updateTitle(linkId: string, title: string) {
         return this.prisma.link.update({
             where: {
                 linkId: linkId,
@@ -87,5 +87,31 @@ export class LinkService {
                 title: title,
             },
         })
+    }
+
+    async updateTags(linkId: string, tags: string[]) {
+        // TODO :  변동내역 로깅
+        return this.prisma.link.update({
+            where: {
+                linkId: linkId,
+            },
+            data: {
+                tags: tags,
+            },
+        })
+    }
+
+    async createOne(createLinkDto: CreateLinkDto, userId: number) {
+        const link = await this.prisma.link.create({
+            data: {
+                URL: createLinkDto.URL,
+                userId: userId,
+            },
+        })
+        return {
+            linkId: link.linkId,
+            URL: link.URL,
+            content: null,
+        }
     }
 }

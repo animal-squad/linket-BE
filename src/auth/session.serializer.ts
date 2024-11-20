@@ -2,7 +2,6 @@ import { PassportSerializer } from '@nestjs/passport'
 import { Injectable, Inject } from '@nestjs/common'
 import { UserService } from '../user/user.service'
 import { Redis } from 'ioredis'
-import { User } from '@prisma/client'
 
 @Injectable()
 export class SessionSerializer extends PassportSerializer {
@@ -21,7 +20,6 @@ export class SessionSerializer extends PassportSerializer {
         console.log('excute deserializer')
         try {
             const cachedUser = await this.redisClient.get(`userId:${userId}`)
-            console.log(cachedUser)
             if (cachedUser) {
                 done(null, JSON.parse(cachedUser))
                 return

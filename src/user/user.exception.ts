@@ -5,11 +5,11 @@ export class NotRegisterUserException extends HttpException {
         super(
             {
                 name: 'NotRegisterUser',
-                statusCode: HttpStatus.NOT_FOUND,
+                statusCode: HttpStatus.UNAUTHORIZED,
                 errorCode: 601,
                 message: 'Email is not registered',
             },
-            HttpStatus.NOT_FOUND,
+            HttpStatus.UNAUTHORIZED,
         )
     }
 }

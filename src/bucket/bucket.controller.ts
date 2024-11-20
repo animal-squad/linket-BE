@@ -10,6 +10,7 @@ import { User, Bucket } from '@prisma/client'
 import { PaginatedBucketDto, PaginationQueryDto } from '../utils/pagination.dto'
 import { HttpService } from '@nestjs/axios'
 import { firstValueFrom } from 'rxjs'
+import { AIResponseFailException } from './bucket.exception'
 
 @Controller('api/bucket')
 export class BucketController {
@@ -32,6 +33,9 @@ export class BucketController {
 
             const aiResponse = await firstValueFrom(this.httpService.post(`${process.env.URL}/ai/categorize`, { links: links }, { timeout: 60000 }))
 
+            if (!aiResponse.data) {
+                throw new AIResponseFailException()
+            }
             const updateLinkDto = aiResponse.data
 
             return this.linkService.updateTagAndTitle(updateLinkDto)

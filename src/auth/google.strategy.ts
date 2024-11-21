@@ -32,7 +32,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
         const googleUserInfo = {
             // google login으로 받아오는 정보
             email: emails[0].value,
-            name: name.givenName + ' ' + name.familyName,
+            name: name.givenName,
             picture: photos[0].value,
             socialProvider: provider,
             accessToken,

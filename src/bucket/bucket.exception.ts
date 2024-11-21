@@ -14,14 +14,28 @@ export class BucketNotFoundException extends HttpException {
     }
 }
 
-export class AIResponseFailException extends HttpException {
+export class AIResponseNoDataException extends HttpException {
     constructor() {
         super(
             {
-                name: 'AIResponseFail',
+                name: 'AIResponseNoData',
                 statusCode: HttpStatus.BAD_REQUEST,
                 errorCode: 702,
-                message: 'Response Not Found',
+                message: 'AI Response not found',
+            },
+            HttpStatus.BAD_REQUEST,
+        )
+    }
+}
+
+export class ClassificationFailException extends HttpException {
+    constructor() {
+        super(
+            {
+                name: 'ClassificationFail',
+                statusCode: HttpStatus.BAD_REQUEST,
+                errorCode: 703,
+                message: 'Error during AI classification operation',
             },
             HttpStatus.BAD_REQUEST,
         )

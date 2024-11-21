@@ -43,9 +43,7 @@ export class BucketController {
 
                 return this.linkService.updateTagAndTitle(updateLinkDto)
             } catch (err) {
-                if (err.response.status === 500) {
-                    throw new ClassificationFailException()
-                }
+                throw new ClassificationFailException()
             }
         }
     }

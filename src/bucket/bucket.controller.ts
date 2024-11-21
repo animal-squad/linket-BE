@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res, Query, Put } from '@nestjs/common'
+import { Controller, Get, Post, Body, Param, Delete, Res, Query, Put } from '@nestjs/common'
 import { Response } from 'express'
 import { BucketService } from './bucket.service'
 import { BucketDto, CreateBucketDto } from './dto/bucket.dto'
@@ -6,11 +6,11 @@ import { LinkService } from '../link/link.service'
 import { UserService } from '../user/user.service'
 import { NotRegisterUserException } from '../user/user.exception'
 import { GetUser } from '../user/user.decorator'
-import { User, Bucket } from '@prisma/client'
+import { Bucket } from '@prisma/client'
 import { PaginatedBucketDto, PaginationQueryDto } from '../utils/pagination.dto'
 import { HttpService } from '@nestjs/axios'
 import { firstValueFrom } from 'rxjs'
-import { AIResponseFailException } from './bucket.exception'
+import { AIResponseNoDataException, ClassificationFailException } from './bucket.exception'
 
 @Controller('api/bucket')
 export class BucketController {
@@ -31,14 +31,22 @@ export class BucketController {
             const links = await this.linkService.createManyAndMapping(createBucketDto.links, user.userId, bucketId)
             res.status(201).send(bucketId)
 
-            const aiResponse = await firstValueFrom(this.httpService.post(`${process.env.URL}/ai/categorize`, { links: links }, { timeout: 60000 }))
+            try {
+                const aiResponse = await firstValueFrom(
+                    this.httpService.post(`${process.env.URL}/ai/categorize`, { links: links }, { timeout: 60000 }),
+                )
 
-            if (!aiResponse.data) {
-                throw new AIResponseFailException()
+                if (!aiResponse.data) {
+                    throw new AIResponseNoDataException()
+                }
+                const updateLinkDto = aiResponse.data
+
+                return this.linkService.updateTagAndTitle(updateLinkDto)
+            } catch (err) {
+                if (err.response.status === 500) {
+                    throw new ClassificationFailException()
+                }
             }
-            const updateLinkDto = aiResponse.data
-
-            return this.linkService.updateTagAndTitle(updateLinkDto)
         }
     }
 

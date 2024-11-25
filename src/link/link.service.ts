@@ -114,4 +114,21 @@ export class LinkService {
             content: null,
         }
     }
+
+    async deleteLinks(linkId: string[]) {
+        await this.prisma.bucketLink.deleteMany({
+            where: {
+                linkId: {
+                    in: linkId,
+                },
+            },
+        })
+        return this.prisma.link.deleteMany({
+            where: {
+                linkId: {
+                    in: linkId,
+                },
+            },
+        })
+    }
 }

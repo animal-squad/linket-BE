@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post, Put } from '@nestjs/common'
+import { Body, Controller, Delete, Param, Post, Put } from '@nestjs/common'
 import { LinkService } from './link.service'
 import { GetUser } from '../user/user.decorator'
 import { CreateLinkDto } from './dto/link.dto'
@@ -36,5 +36,10 @@ export class LinkController {
         const updateLinkDto = aiResponse.data
 
         return await this.linkService.updateTagAndTitle(updateLinkDto)
+    }
+
+    @Delete()
+    async deleteLinks(@Body('linkId') linkId: string[], @GetUser() userId: number) {
+        return this.linkService.deleteLinks(linkId)
     }
 }

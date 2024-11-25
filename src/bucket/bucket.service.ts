@@ -38,7 +38,6 @@ export class BucketService {
             data: {
                 title: createBucketDto.title || new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) + '에 생성된 바구니',
                 userId: userId,
-                linkCount: createBucketDto.links.length,
                 createdAt: new Date(),
             },
         })
@@ -46,8 +45,8 @@ export class BucketService {
     }
 
     async findAll(userId: number, query: PaginationQueryDto): Promise<PaginatedBucketDto<Bucket>> {
-        const page = Number(query.page) ?? 1
-        const take = Number(query.take) ?? 10
+        const page = Number(query.page) || 1
+        const take = Number(query.take) || 10
 
         const [buckets, totalBuckets] = await Promise.all([
             this.prisma.bucket.findMany({
@@ -59,13 +58,26 @@ export class BucketService {
                 orderBy: {
                     createdAt: 'desc',
                 },
+                include: {
+                    _count: {
+                        select: { bucketLink: true },
+                    },
+                },
             }),
             this.prisma.bucket.count({
                 where: { userId: userId },
             }),
         ])
 
-        return new PaginatedBucketDto(buckets, page, take, totalBuckets)
+        const formattedBuckets = buckets.map(bucket => ({
+            bucketId: bucket.bucketId,
+            userId: userId,
+            title: bucket.title,
+            linkCount: bucket._count.bucketLink,
+            createdAt: bucket.createdAt,
+            isShared: false,
+        }))
+        return new PaginatedBucketDto(formattedBuckets, page, take, totalBuckets)
     }
 
     async findOne(bucketId: string, userId: number) {
@@ -78,7 +90,7 @@ export class BucketService {
         const bucketResponse = {
             userId: bucket.userId,
             title: bucket.title,
-            linkCount: bucket.linkCount,
+            linkCount: bucket.bucketLink.length,
             createdAt: bucket.createdAt,
             isShared: bucket.isShared,
             isMine: bucket.userId === userId,
@@ -108,7 +120,6 @@ export class BucketService {
         const newBucket = await this.prisma.bucket.create({
             data: {
                 title: bucket.title + '의 복사본',
-                linkCount: bucket.linkCount,
                 userId: userId,
             },
         })

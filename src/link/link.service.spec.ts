@@ -22,6 +22,10 @@ const mockPrismaService = {
         createMany: jest.fn(),
         update: jest.fn(),
         delete: jest.fn(),
+        deleteMany: jest.fn(),
+    },
+    bucketLink: {
+        deleteMany: jest.fn(),
     },
 }
 
@@ -66,6 +70,57 @@ describe('LinkService', () => {
                 data: { tags: mockTags },
             })
             expect(result).toEqual(updateLink)
+        })
+    })
+
+    describe('deleteLinks', () => {
+        it('should delete links and relations', async () => {
+            const mockLinkIds = ['test1', 'test2', 'test3']
+
+            mockPrismaService.bucketLink.deleteMany.mockResolvedValue({ count: 3 })
+            mockPrismaService.link.deleteMany.mockResolvedValue({ count: 3 })
+            await linkService.deleteLinks(mockLinkIds)
+
+            expect(mockPrismaService.bucketLink.deleteMany).toHaveBeenCalledWith({
+                where: {
+                    linkId: {
+                        in: mockLinkIds,
+                    },
+                },
+            })
+            expect(mockPrismaService.link.deleteMany).toHaveBeenCalledWith({
+                where: {
+                    linkId: {
+                        in: mockLinkIds,
+                    },
+                },
+            })
+            expect(mockPrismaService.bucketLink.deleteMany).toHaveBeenCalled()
+            expect(mockPrismaService.link.deleteMany).toHaveBeenCalled()
+        })
+        it('should delete only links', async () => {
+            const mockLinkIds = ['test1', 'test2', 'test3']
+
+            mockPrismaService.bucketLink.deleteMany.mockResolvedValue({ count: 0 })
+            mockPrismaService.link.deleteMany.mockResolvedValue({ count: 3 })
+            await linkService.deleteLinks(mockLinkIds)
+
+            expect(mockPrismaService.bucketLink.deleteMany).toHaveBeenCalledWith({
+                where: {
+                    linkId: {
+                        in: mockLinkIds,
+                    },
+                },
+            })
+            expect(mockPrismaService.link.deleteMany).toHaveBeenCalledWith({
+                where: {
+                    linkId: {
+                        in: mockLinkIds,
+                    },
+                },
+            })
+            expect(mockPrismaService.bucketLink.deleteMany).toHaveBeenCalled()
+            expect(mockPrismaService.link.deleteMany).toHaveBeenCalled()
         })
     })
 })

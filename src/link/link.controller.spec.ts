@@ -10,6 +10,7 @@ const mockLinkService = {
     updateTags: jest.fn(),
     createOne: jest.fn(),
     updateTagAndTitle: jest.fn(),
+    deleteLinks: jest.fn(),
 }
 
 const mockHttpService = {
@@ -122,6 +123,15 @@ describe('LinkController', () => {
             expect(mockLinkService.createOne).toHaveBeenCalledWith(createLinkDto, userId)
             expect(mockHttpService.post).toHaveBeenCalledWith(expect.any(String), { links: [aiRequest] }, { timeout: 60000 })
             expect(mockLinkService.updateTagAndTitle).toHaveBeenCalledWith(aiResponse.data)
+        })
+    })
+
+    describe('DeleteLinks', () => {
+        it('should delete links', async () => {
+            const mockLinkIds = ['test-linkId1', 'test-linkId2', 'test-linkId3']
+            mockLinkService.deleteLinks.mockResolvedValue({ count: 3 })
+            await linkController.deleteLinks(mockLinkIds, userId)
+            expect(mockLinkService.deleteLinks).toHaveBeenCalledWith(mockLinkIds)
         })
     })
 })

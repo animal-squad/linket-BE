@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../../prisma/prisma.service'
 import { CreateLinkDto, UpdateLinkDto } from './dto/link.dto'
+import { PaginatedBucketDto, PaginatedLinkDto, PaginationQueryDto } from '../utils/pagination.dto'
 
 @Injectable()
 export class LinkService {
@@ -130,5 +131,37 @@ export class LinkService {
                 },
             },
         })
+    }
+
+    async getLinks(query: PaginationQueryDto, tags: string[], userId: number) {
+        const page = Number(query.page) || 1
+        const take = Number(query.take) || 10
+        const tag = tags || []
+
+        const whereCondition: any = {
+            userId: userId,
+        }
+
+        if (tag.length > 0) {
+            whereCondition.tags = {
+                hasSome: tag,
+            }
+        }
+
+        const [links, totalLinks] = await Promise.all([
+            this.prisma.link.findMany({
+                skip: (page - 1) * take,
+                take: take,
+                where: whereCondition,
+                orderBy: {
+                    createdAt: 'desc',
+                },
+            }),
+            this.prisma.link.count({
+                where: whereCondition,
+            }),
+        ])
+
+        return new PaginatedLinkDto(links, page, take, tag, totalLinks)
     }
 }

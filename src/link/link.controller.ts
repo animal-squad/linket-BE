@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Param, Post, Put } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
 import { LinkService } from './link.service'
 import { GetUser } from '../user/user.decorator'
 import { CreateLinkDto } from './dto/link.dto'
 import { firstValueFrom } from 'rxjs'
 import { HttpService } from '@nestjs/axios'
+import { PaginatedLinkDto, PaginationQueryDto } from '../utils/pagination.dto'
+import { Link } from '@prisma/client'
 
 @Controller('api/link')
 export class LinkController {
@@ -41,5 +43,10 @@ export class LinkController {
     @Delete()
     async deleteLinks(@Body('linkId') linkId: string[], @GetUser() userId: number) {
         return this.linkService.deleteLinks(linkId)
+    }
+
+    @Get()
+    async getLinks(@Query() query: PaginationQueryDto, @Body('tags') tags: string[], @GetUser() userId: number): Promise<PaginatedLinkDto<Link>> {
+        return this.linkService.getLinks(query, tags, userId)
     }
 }

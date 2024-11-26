@@ -34,3 +34,29 @@ export class PaginatedBucketDto<T> {
         }
     }
 }
+
+export class PaginatedLinkDto<T> {
+    links: T[]
+    meta: {
+        totalLinks: number
+        totalPages: number
+        hasNextPage: boolean
+        hasPrevPage: boolean
+        page: number
+        take: number
+        tag: string[]
+    }
+
+    constructor(links: T[], page: number, take: number, tag: string[], totalLinks: number) {
+        this.links = links
+        this.meta = {
+            totalLinks,
+            totalPages: Math.ceil(totalLinks / take),
+            hasNextPage: page < Math.ceil(totalLinks / take),
+            hasPrevPage: page > 1,
+            page,
+            take,
+            tag,
+        }
+    }
+}

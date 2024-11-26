@@ -11,6 +11,7 @@ const mockLinkService = {
     createOne: jest.fn(),
     updateTagAndTitle: jest.fn(),
     deleteLinks: jest.fn(),
+    getLinks: jest.fn(),
 }
 
 const mockHttpService = {
@@ -132,6 +133,112 @@ describe('LinkController', () => {
             mockLinkService.deleteLinks.mockResolvedValue({ count: 3 })
             await linkController.deleteLinks(mockLinkIds, userId)
             expect(mockLinkService.deleteLinks).toHaveBeenCalledWith(mockLinkIds)
+        })
+    })
+
+    describe('GetLinks', () => {
+        it('should get links with no filter', async () => {
+            const mockLinks = [
+                {
+                    linkId: 'link1',
+                    userId: 1,
+                    URL: 'test-url',
+                    title: 'Test Link 1',
+                    tags: ['web', 'mobile'],
+                    createdAt: new Date(),
+                    views: 0,
+                    openedAt: new Date(),
+                },
+                {
+                    linkId: 'link2',
+                    userId: 1,
+                    URL: 'test-url',
+                    title: 'Test Link 2',
+                    tags: ['ai'],
+                    createdAt: new Date(),
+                    views: 0,
+                    openedAt: new Date(),
+                },
+                {
+                    linkId: 'link3',
+                    userId: 1,
+                    URL: 'test=url',
+                    title: 'Test Link 3',
+                    tags: ['IT', 'web'],
+                    createdAt: new Date(),
+                    views: 0,
+                    openedAt: new Date(),
+                },
+            ]
+
+            const mockResult = {
+                links: mockLinks,
+                meta: {
+                    totalLinks: 3,
+                    totalPages: 1,
+                    hasNextPage: false,
+                    hasPrevPage: false,
+                    page: 1,
+                    take: 10,
+                    tag: [],
+                },
+            }
+
+            mockLinkService.getLinks.mockResolvedValue(mockResult)
+            const query = { page: 1, take: 10 }
+            const body = []
+
+            const result = await linkController.getLinks(query, body, userId)
+
+            expect(mockLinkService.getLinks).toHaveBeenCalledWith(query, body, userId)
+            expect(result).toEqual(mockResult)
+        })
+
+        it('should get links with tag filter', async () => {
+            const mockLinks = [
+                {
+                    linkId: 'link1',
+                    userId: 1,
+                    URL: 'test-url',
+                    title: 'Test Link 1',
+                    tags: ['web', 'mobile'],
+                    createdAt: new Date(),
+                    views: 0,
+                    openedAt: new Date(),
+                },
+                {
+                    linkId: 'link3',
+                    userId: 1,
+                    URL: 'test=url',
+                    title: 'Test Link 3',
+                    tags: ['IT', 'web'],
+                    createdAt: new Date(),
+                    views: 0,
+                    openedAt: new Date(),
+                },
+            ]
+
+            const mockResult = {
+                links: mockLinks,
+                meta: {
+                    totalLinks: 2,
+                    totalPages: 1,
+                    hasNextPage: false,
+                    hasPrevPage: false,
+                    page: 1,
+                    take: 10,
+                    tag: ['web'],
+                },
+            }
+
+            mockLinkService.getLinks.mockResolvedValue(mockResult)
+            const query = { page: 1, take: 10 }
+            const body = ['web']
+
+            const result = await linkController.getLinks(query, body, userId)
+
+            expect(mockLinkService.getLinks).toHaveBeenCalledWith(query, body, userId)
+            expect(result).toEqual(mockResult)
         })
     })
 })

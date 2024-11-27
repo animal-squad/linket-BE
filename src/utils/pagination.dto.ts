@@ -27,7 +27,7 @@ export class PaginatedBucketDto<T> {
     buckets: T[]
 
     @ApiProperty({
-        description: 'meta data',
+        description: 'pagination data',
         example: {
             totalBuckets: 1,
             totalPages: 1,
@@ -60,7 +60,55 @@ export class PaginatedBucketDto<T> {
 }
 
 export class PaginatedLinkDto<T> {
+    @ApiProperty({
+        description: '페이지에 표시될 링크 목록',
+        example: [
+            {
+                linkId: 'VxLHY9N9',
+                userId: 1,
+                URL: 'www.naver.com',
+                createdAt: '2024-11-09T16:05:48.292Z',
+                openedAt: '2024-11-09T16:05:48.292Z',
+                views: 0,
+                tags: ['검색', '도구'],
+                title: '네이버',
+            },
+            {
+                linkId: 'hfuwjw4U',
+                userId: 1,
+                URL: 'www.daum.net',
+                createdAt: '2024-11-09T16:05:48.292Z',
+                openedAt: '2024-11-09T16:05:48.292Z',
+                views: 0,
+                tags: ['검색', '도구'],
+                title: '다음',
+            },
+            {
+                linkId: 'kT2WKkom',
+                userId: 1,
+                URL: 'www.google.com',
+                createdAt: '2024-11-09T16:05:48.292Z',
+                openedAt: '2024-11-09T16:05:48.292Z',
+                views: 0,
+                tags: ['검색', '도구'],
+                title: '구글',
+            },
+        ],
+    })
     links: T[]
+
+    @ApiProperty({
+        description: 'pagination data',
+        example: {
+            totalLinks: 3,
+            totalPages: 1,
+            hasNextPage: false,
+            hasPrevPage: false,
+            page: 1,
+            take: 10,
+            tag: [],
+        },
+    })
     meta: {
         totalLinks: number
         totalPages: number

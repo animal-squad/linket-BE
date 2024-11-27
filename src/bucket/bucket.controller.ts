@@ -13,9 +13,7 @@ import { ApiBody, ApiCookieAuth, ApiHeader, ApiOperation, ApiParam, ApiQuery, Ap
 @ApiResponse({ status: 401, description: '쿠키에 세션 정보 없음', type: NotLoginResponse })
 @Controller('api/bucket')
 export class BucketController {
-    constructor(
-        private readonly bucketService: BucketService,
-    ) {}
+    constructor(private readonly bucketService: BucketService) {}
 
     @ApiOperation({
         summary: '바구니 조회 API',

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../../prisma/prisma.service'
-import { CreateLinkDto, UpdateLinkDto } from './dto/link.dto'
-import { PaginatedBucketDto, PaginatedLinkDto, PaginationQueryDto } from '../utils/pagination.dto'
+import { BodyTagDto, CreateLinkDto, DeleteLinkDto, UpdateLinkDto, UpdateTitleDto } from './dto/link.dto'
+import { PaginatedLinkDto, PaginationQueryDto } from '../utils/pagination.dto'
 
 @Injectable()
 export class LinkService {
@@ -79,7 +79,8 @@ export class LinkService {
         })
     }
 
-    async updateTitle(linkId: string, title: string) {
+    async updateTitle(linkId: string, updateTitleDto: UpdateTitleDto) {
+        const title = updateTitleDto.title
         return this.prisma.link.update({
             where: {
                 linkId: linkId,
@@ -90,8 +91,9 @@ export class LinkService {
         })
     }
 
-    async updateTags(linkId: string, tags: string[]) {
+    async updateTags(linkId: string, updateTagDto: BodyTagDto) {
         // TODO :  변동내역 로깅
+        const tags = updateTagDto.tags
         return this.prisma.link.update({
             where: {
                 linkId: linkId,
@@ -116,7 +118,8 @@ export class LinkService {
         }
     }
 
-    async deleteLinks(linkId: string[]) {
+    async deleteLinks(deleteLinkDto: DeleteLinkDto) {
+        const linkId = deleteLinkDto.linkId
         await this.prisma.bucketLink.deleteMany({
             where: {
                 linkId: {
@@ -133,10 +136,10 @@ export class LinkService {
         })
     }
 
-    async getLinks(query: PaginationQueryDto, tags: string[], userId: number) {
+    async getLinks(query: PaginationQueryDto, tags: BodyTagDto, userId: number) {
         const page = Number(query.page) || 1
         const take = Number(query.take) || 10
-        const tag = tags || []
+        const tag = tags.tags || []
 
         const whereCondition: any = {
             userId: userId,

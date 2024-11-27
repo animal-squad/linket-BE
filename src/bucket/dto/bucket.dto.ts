@@ -108,7 +108,7 @@ export class UpdateShareResponseDto {
     @ApiProperty({ description: '공유 여부', example: true })
     isShared: boolean
 
-    @ApiProperty({ description: '공유된 바구니의 링크', example: 'https://link-bucket.animal-squad.uk/Hs2is35E'})
+    @ApiProperty({ description: '공유된 바구니의 링크', example: 'https://link-bucket.animal-squad.uk/Hs2is35E' })
     shareURL: string
 }
 

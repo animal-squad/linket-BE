@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer'
 import { IsOptional } from 'class-validator'
+import { ApiProperty } from '@nestjs/swagger'
 
 export class PaginationQueryDto {
     @Type(() => Number)
@@ -12,7 +13,30 @@ export class PaginationQueryDto {
 }
 
 export class PaginatedBucketDto<T> {
+    @ApiProperty({
+        description: '페이지에 표시될 바구니 목록',
+        example: {
+            bucketId: 'KnNNaU8U',
+            userId: 1,
+            title: '2024. 11. 9. 오후 4:05:48에 생성된 Bucket',
+            linkCount: 3,
+            createdAt: '2024-11-09T16:05:48.283Z',
+            isShared: false,
+        },
+    })
     buckets: T[]
+
+    @ApiProperty({
+        description: 'meta data',
+        example: {
+            totalBuckets: 1,
+            totalPages: 1,
+            hasNextPage: false,
+            hasPrevPage: false,
+            page: 1,
+            take: 10,
+        },
+    })
     meta: {
         totalBuckets: number
         totalPages: number

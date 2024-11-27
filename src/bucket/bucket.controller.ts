@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, Res, Query, Put } from '@nestjs/common'
+import { Controller, Get, Post, Body, Param, Delete, Query, Put } from '@nestjs/common'
 import { BucketService } from './bucket.service'
 import { BucketDto, BucketResponseDto, CreateBucketResponseDto, UpdateShareDto, UpdateShareResponseDto, UpdateTitleDto } from './dto/bucket.dto'
 import { BucketUnauthorizedUserResponse, NotBucketOwnerResponse, NotLoginResponse } from '../user/user.exception'

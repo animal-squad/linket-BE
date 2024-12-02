@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { BucketDto, CreateBucketDto } from './dto/bucket.dto'
+import { BucketDto, BucketResponseDto, CreateBucketDto } from './dto/bucket.dto'
 import { PrismaService } from '../../prisma/prisma.service'
 import { LinkService } from '../link/link.service'
 import { PaginatedBucketDto, PaginationQueryDto } from '../utils/pagination.dto'
@@ -87,7 +87,7 @@ export class BucketService {
             throw new BucketUnauthorizedUserException()
         }
 
-        const bucketResponse = {
+        const bucketResponse: BucketResponseDto = {
             userId: bucket.userId,
             title: bucket.title,
             linkCount: bucket.bucketLink.length,

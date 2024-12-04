@@ -71,6 +71,7 @@ export class PaginatedLinkDto<T> {
                 openedAt: '2024-11-09T16:05:48.292Z',
                 views: 0,
                 tags: ['검색', '도구'],
+                keywords: ['키워드1', '키워드2'],
                 title: '네이버',
             },
             {
@@ -81,6 +82,7 @@ export class PaginatedLinkDto<T> {
                 openedAt: '2024-11-09T16:05:48.292Z',
                 views: 0,
                 tags: ['검색', '도구'],
+                keywords: ['키워드1', '키워드2'],
                 title: '다음',
             },
             {
@@ -91,6 +93,7 @@ export class PaginatedLinkDto<T> {
                 openedAt: '2024-11-09T16:05:48.292Z',
                 views: 0,
                 tags: ['검색', '도구'],
+                keywords: ['키워드1', '키워드2'],
                 title: '구글',
             },
         ],

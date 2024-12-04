@@ -1,14 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger'
 
 class InputLinkDto {
-    @ApiProperty({ description: 'Link Id' })
+    @ApiProperty({ description: 'Link Id', example: 'VxLHY9N9' })
     linkId: string
 
-    @ApiProperty({ description: 'Link title' })
+    @ApiProperty({ description: '링크의 제목', example: 'Github' })
     title?: string
 
-    @ApiProperty({ description: 'tags' })
+    @ApiProperty({ description: '링크의 태그', example: ['개발'] })
     tags: string[]
+
+    @ApiProperty({ description: '링크의 키워드', example: ['깃허브'] })
+    keywords?: string[]
 }
 
 export class UpdateLinkDto {
@@ -39,6 +42,9 @@ export class LinkDto {
 
     @ApiProperty({ description: '링크의 태그', example: ['tag1', 'tag2'] })
     tags?: string[]
+
+    @ApiProperty({ description: '링크의 키워드', example: ['keyword1']})
+    keywords: string[]
 
     @ApiProperty({ description: '링크 생성일', example: new Date() })
     createdAt: Date

@@ -1,0 +1,399 @@
+├─ @eslint-community/eslint-utils@4.4.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/eslint-community/eslint-utils
+│  ├─ publisher: Toru Nagashima
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@eslint-community/eslint-utils
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@eslint-community/eslint-utils/LICENSE
+├─ @eslint-community/regexpp@4.11.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/eslint-community/regexpp
+│  ├─ publisher: Toru Nagashima
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@eslint-community/regexpp
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@eslint-community/regexpp/LICENSE
+├─ @eslint/eslintrc@2.1.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/eslint/eslintrc
+│  ├─ publisher: Nicholas C. Zakas
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@eslint/eslintrc
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@eslint/eslintrc/LICENSE
+├─ @eslint/js@8.57.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/eslint/eslint
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@eslint/js
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@eslint/js/LICENSE
+├─ @nestjs/axios@3.1.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nestjs/axios
+│  ├─ publisher: Kamil Mysliwiec
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/axios
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/axios/LICENSE
+├─ @nestjs/cli@10.4.5
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nestjs/nest-cli
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/cli
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/cli/LICENSE
+├─ @nestjs/common@10.4.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nestjs/nest
+│  ├─ publisher: Kamil Mysliwiec
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/common
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/common/LICENSE
+├─ @nestjs/config@3.2.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nestjs/config
+│  ├─ publisher: Kamil Mysliwiec
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/config
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/config/LICENSE
+├─ @nestjs/core@10.4.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nestjs/nest
+│  ├─ publisher: Kamil Mysliwiec
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/core
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/core/LICENSE
+├─ @nestjs/passport@10.0.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nestjs/passport
+│  ├─ publisher: Kamil Mysliwiec
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/passport
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/passport/LICENSE
+├─ @nestjs/platform-express@10.4.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nestjs/nest
+│  ├─ publisher: Kamil Mysliwiec
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/platform-express
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/platform-express/LICENSE
+├─ @nestjs/schematics@10.1.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nestjs/schematics
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/schematics
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/schematics/LICENSE
+├─ @nestjs/swagger@7.4.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nestjs/swagger
+│  ├─ publisher: Kamil Mysliwiec
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/swagger
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/swagger/LICENSE
+├─ @nestjs/testing@10.4.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nestjs/nest
+│  ├─ publisher: Kamil Mysliwiec
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/testing
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@nestjs/testing/LICENSE
+├─ @prisma/client@5.21.1
+│  ├─ licenses: Apache-2.0
+│  ├─ repository: https://github.com/prisma/prisma
+│  ├─ publisher: Tim Suchanek
+│  ├─ email: suchanek@prisma.io
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@prisma/client
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@prisma/client/LICENSE
+├─ @types/connect-redis@0.0.23
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@types/connect-redis
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@types/connect-redis/LICENSE
+├─ @types/express-session@1.18.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@types/express-session
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@types/express-session/LICENSE
+├─ @types/express@4.17.21
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@types/express
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@types/express/LICENSE
+├─ @types/ioredis@5.0.0
+│  ├─ licenses: MIT
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@types/ioredis
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@types/ioredis/LICENSE
+├─ @types/jest@29.5.13
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@types/jest
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@types/jest/LICENSE
+├─ @types/morgan@1.9.9
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@types/morgan
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@types/morgan/LICENSE
+├─ @types/node@20.16.11
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@types/node
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@types/node/LICENSE
+├─ @types/passport-google-oauth20@2.0.16
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@types/passport-google-oauth20
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@types/passport-google-oauth20/LICENSE
+├─ @types/supertest@6.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@types/supertest
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@types/supertest/LICENSE
+├─ @typescript-eslint/eslint-plugin@8.9.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/typescript-eslint/typescript-eslint
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@typescript-eslint/eslint-plugin
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@typescript-eslint/eslint-plugin/LICENSE
+├─ @typescript-eslint/parser@8.9.0
+│  ├─ licenses: BSD-2-Clause
+│  ├─ repository: https://github.com/typescript-eslint/typescript-eslint
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@typescript-eslint/parser
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@typescript-eslint/parser/LICENSE
+├─ @typescript-eslint/scope-manager@8.9.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/typescript-eslint/typescript-eslint
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@typescript-eslint/scope-manager
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@typescript-eslint/scope-manager/LICENSE
+├─ @typescript-eslint/type-utils@8.9.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/typescript-eslint/typescript-eslint
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@typescript-eslint/type-utils
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@typescript-eslint/type-utils/LICENSE
+├─ @typescript-eslint/types@8.9.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/typescript-eslint/typescript-eslint
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@typescript-eslint/types
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@typescript-eslint/types/LICENSE
+├─ @typescript-eslint/typescript-estree@8.9.0
+│  ├─ licenses: BSD-2-Clause
+│  ├─ repository: https://github.com/typescript-eslint/typescript-eslint
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@typescript-eslint/typescript-estree
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@typescript-eslint/typescript-estree/LICENSE
+├─ @typescript-eslint/utils@8.9.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/typescript-eslint/typescript-eslint
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@typescript-eslint/utils
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@typescript-eslint/utils/LICENSE
+├─ @typescript-eslint/visitor-keys@8.9.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/typescript-eslint/typescript-eslint
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/@typescript-eslint/visitor-keys
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/@typescript-eslint/visitor-keys/LICENSE
+├─ axios@1.7.7
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/axios/axios
+│  ├─ publisher: Matt Zabriskie
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/axios
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/axios/LICENSE
+├─ class-transformer@0.5.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/typestack/class-transformer
+│  ├─ publisher: TypeStack contributors
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/class-transformer
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/class-transformer/LICENSE
+├─ class-validator@0.14.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/typestack/class-validator
+│  ├─ publisher: TypeStack contributors
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/class-validator
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/class-validator/LICENSE
+├─ connect-redis@7.1.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/tj/connect-redis
+│  ├─ publisher: TJ Holowaychuk
+│  ├─ email: tj@vision-media.ca
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/connect-redis
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/connect-redis/license
+├─ eslint-config-prettier@9.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prettier/eslint-config-prettier
+│  ├─ publisher: Simon Lydell
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/eslint-config-prettier
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/eslint-config-prettier/LICENSE
+├─ eslint-plugin-prettier@5.2.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prettier/eslint-plugin-prettier
+│  ├─ publisher: Teddy Katz
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/eslint-plugin-prettier
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/eslint-plugin-prettier/LICENSE.md
+├─ eslint-scope@7.2.2
+│  ├─ licenses: BSD-2-Clause
+│  ├─ repository: https://github.com/eslint/eslint-scope
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/eslint-scope
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/eslint-scope/LICENSE
+├─ eslint-visitor-keys@3.4.3
+│  ├─ licenses: Apache-2.0
+│  ├─ repository: https://github.com/eslint/eslint-visitor-keys
+│  ├─ publisher: Toru Nagashima
+│  ├─ url: https://github.com/mysticatea
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/eslint-visitor-keys
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/eslint-visitor-keys/LICENSE
+├─ eslint@8.57.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/eslint/eslint
+│  ├─ publisher: Nicholas C. Zakas
+│  ├─ email: nicholas+npm@nczconsulting.com
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/eslint
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/eslint/LICENSE
+├─ express-session@1.18.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/expressjs/session
+│  ├─ publisher: TJ Holowaychuk
+│  ├─ email: tj@vision-media.ca
+│  ├─ url: http://tjholowaychuk.com
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/express-session
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/express-session/LICENSE
+├─ ioredis@5.4.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/luin/ioredis
+│  ├─ publisher: Zihua Li
+│  ├─ email: i@zihua.li
+│  ├─ url: http://zihua.li
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/ioredis
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/ioredis/LICENSE
+├─ jest@29.7.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jestjs/jest
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/jest
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/jest/LICENSE
+├─ license-checker@25.0.1
+│  ├─ licenses: BSD-3-Clause
+│  ├─ repository: https://github.com/davglass/license-checker
+│  ├─ publisher: Dav Glass
+│  ├─ email: davglass@gmail.com
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/license-checker
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/license-checker/LICENSE
+├─ morgan@1.10.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/expressjs/morgan
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/morgan
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/morgan/LICENSE
+├─ nestjs-session@3.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/iamolegga/nestjs-session
+│  ├─ publisher: iamolegga
+│  ├─ email: iamolegga@gmail.com
+│  ├─ url: http://github.com/iamolegga
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/nestjs-session
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/nestjs-session/LICENSE
+├─ passport-google-oauth20@2.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jaredhanson/passport-google-oauth2
+│  ├─ publisher: Jared Hanson
+│  ├─ email: jaredhanson@gmail.com
+│  ├─ url: http://www.jaredhanson.net/
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/passport-google-oauth20
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/passport-google-oauth20/LICENSE
+├─ passport-local@1.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jaredhanson/passport-local
+│  ├─ publisher: Jared Hanson
+│  ├─ email: jaredhanson@gmail.com
+│  ├─ url: http://www.jaredhanson.net/
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/passport-local
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/passport-local/LICENSE
+├─ passport@0.7.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jaredhanson/passport
+│  ├─ publisher: Jared Hanson
+│  ├─ email: jaredhanson@gmail.com
+│  ├─ url: https://www.jaredhanson.me/
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/passport
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/passport/LICENSE
+├─ pg@8.13.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/brianc/node-postgres
+│  ├─ publisher: Brian Carlson
+│  ├─ email: brian.m.carlson@gmail.com
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/pg
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/pg/LICENSE
+├─ postgres@3.4.4
+│  ├─ licenses: Unlicense
+│  ├─ repository: https://github.com/porsager/postgres
+│  ├─ publisher: Rasmus Porsager
+│  ├─ email: rasmus@porsager.com
+│  ├─ url: https://www.porsager.com
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/postgres
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/postgres/README.md
+├─ prettier-linter-helpers@1.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prettier/prettier-linter-helpers
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/prettier-linter-helpers
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/prettier-linter-helpers/LICENSE.md
+├─ prettier@3.3.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/prettier/prettier
+│  ├─ publisher: James Long
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/prettier
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/prettier/LICENSE
+├─ prisma@5.21.1
+│  ├─ licenses: Apache-2.0
+│  ├─ repository: https://github.com/prisma/prisma
+│  ├─ publisher: Tim Suchanek
+│  ├─ email: suchanek@prisma.io
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/prisma
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/prisma/LICENSE
+├─ project-s@0.0.1
+│  ├─ licenses: UNLICENSED
+│  ├─ private: true
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/license
+├─ reflect-metadata@0.2.2
+│  ├─ licenses: Apache-2.0
+│  ├─ repository: https://github.com/rbuckton/reflect-metadata
+│  ├─ publisher: Ron Buckton
+│  ├─ email: ron.buckton@microsoft.com
+│  ├─ url: http://github.com/rbuckton
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/reflect-metadata
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/reflect-metadata/LICENSE
+├─ rxjs@7.8.1
+│  ├─ licenses: Apache-2.0
+│  ├─ repository: https://github.com/reactivex/rxjs
+│  ├─ publisher: Ben Lesh
+│  ├─ email: ben@benlesh.com
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/rxjs
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/rxjs/LICENSE.txt
+├─ source-map-support@0.5.21
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/evanw/node-source-map-support
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/source-map-support
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/source-map-support/LICENSE.md
+├─ supertest@7.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ladjs/supertest
+│  ├─ publisher: TJ Holowaychuk
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/supertest
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/supertest/LICENSE
+├─ ts-jest@29.2.5
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/kulshekhar/ts-jest
+│  ├─ publisher: Kulshekhar Kabra
+│  ├─ email: kulshekhar@users.noreply.github.com
+│  ├─ url: https://github.com/kulshekhar
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/ts-jest
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/ts-jest/LICENSE.md
+├─ ts-loader@9.5.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/TypeStrong/ts-loader
+│  ├─ publisher: John Reilly
+│  ├─ email: johnny_reilly@hotmail.com
+│  ├─ url: https://johnnyreilly.com
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/ts-loader
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/ts-loader/LICENSE
+├─ ts-node@10.9.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/TypeStrong/ts-node
+│  ├─ publisher: Blake Embrey
+│  ├─ email: hello@blakeembrey.com
+│  ├─ url: http://blakeembrey.me
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/ts-node
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/ts-node/LICENSE
+├─ tsconfig-paths@4.2.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/dividab/tsconfig-paths
+│  ├─ publisher: Jonas Kello
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/tsconfig-paths
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/tsconfig-paths/LICENSE
+├─ typescript@5.6.3
+│  ├─ licenses: Apache-2.0
+│  ├─ repository: https://github.com/microsoft/TypeScript
+│  ├─ publisher: Microsoft Corp.
+│  ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/typescript
+│  └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/typescript/LICENSE.txt
+└─ yui-lint@0.2.0
+   ├─ licenses: BSD
+   ├─ repository: https://github.com/yui/yui-lint
+   ├─ path: /Users/user/Desktop/KTB/project-s-BE/node_modules/yui-lint
+   └─ licenseFile: /Users/user/Desktop/KTB/project-s-BE/node_modules/yui-lint/LICENSE
+

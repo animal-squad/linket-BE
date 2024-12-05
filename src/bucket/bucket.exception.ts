@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus } from '@nestjs/common'
+import { ApiProperty } from '@nestjs/swagger'
 
 export class BucketNotFoundException extends HttpException {
     constructor() {
@@ -40,4 +41,18 @@ export class ClassificationFailException extends HttpException {
             HttpStatus.BAD_REQUEST,
         )
     }
+}
+
+export class ClassificationFailResponse {
+    @ApiProperty({ description: 'error name', example: 'ClassificationFail' })
+    name: string
+
+    @ApiProperty({ description: 'http status code', example: '400' })
+    statusCode: number
+
+    @ApiProperty({ description: 'error code', example: '703' })
+    errorCode: number
+
+    @ApiProperty({ description: 'error message', example: 'Error during AI classification operation' })
+    message: string
 }

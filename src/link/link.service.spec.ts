@@ -11,6 +11,7 @@ const mockLink = {
     openedAt: new Date('2024-01-02T00:00:00Z'),
     views: 0,
     tags: ['none'],
+    keywords: ['a', 'b', 'c'],
     title: 'test-title',
 }
 
@@ -22,8 +23,20 @@ const mockPrismaService = {
         createMany: jest.fn(),
         update: jest.fn(),
         delete: jest.fn(),
+        deleteMany: jest.fn(),
+        count: jest.fn(),
+    },
+    bucketLink: {
+        deleteMany: jest.fn(),
     },
 }
+
+const mockPaginationQueryDto = {
+    page: 1,
+    take: 10,
+}
+
+const userId = 1
 
 describe('LinkService', () => {
     let linkService: LinkService
@@ -54,18 +67,174 @@ describe('LinkService', () => {
 
     describe('updateTags', () => {
         it('should update tags of link', async () => {
-            const mockTags = ['test1', 'test2', 'test3']
-            const updateLink = { ...mockLink, tags: mockTags }
+            const mockBodyTagDto = { tags: ['test1', 'test2', 'test3'] }
+            const updateLink = { ...mockLink, tags: mockBodyTagDto }
 
             mockPrismaService.link.update.mockResolvedValue(updateLink)
 
-            const result = await linkService.updateTags(mockLink.linkId, mockTags)
+            const result = await linkService.updateTags(mockLink.linkId, mockBodyTagDto)
 
             expect(prismaService.link.update).toHaveBeenCalledWith({
                 where: { linkId: mockLink.linkId },
-                data: { tags: mockTags },
+                data: { tags: mockBodyTagDto.tags },
             })
             expect(result).toEqual(updateLink)
+        })
+    })
+
+    describe('deleteLinks', () => {
+        it('should delete links and relations', async () => {
+            const mockDeleteTagDto = { linkId: ['test1', 'test2', 'test3'] }
+
+            mockPrismaService.bucketLink.deleteMany.mockResolvedValue({ count: 3 })
+            mockPrismaService.link.deleteMany.mockResolvedValue({ count: 3 })
+            await linkService.deleteLinks(mockDeleteTagDto)
+
+            expect(mockPrismaService.bucketLink.deleteMany).toHaveBeenCalledWith({
+                where: {
+                    linkId: {
+                        in: mockDeleteTagDto.linkId,
+                    },
+                },
+            })
+            expect(mockPrismaService.link.deleteMany).toHaveBeenCalledWith({
+                where: {
+                    linkId: {
+                        in: mockDeleteTagDto.linkId,
+                    },
+                },
+            })
+            expect(mockPrismaService.bucketLink.deleteMany).toHaveBeenCalled()
+            expect(mockPrismaService.link.deleteMany).toHaveBeenCalled()
+        })
+        it('should delete only links', async () => {
+            const mockDeleteTagDto = { linkId: ['test1', 'test2', 'test3'] }
+
+            mockPrismaService.bucketLink.deleteMany.mockResolvedValue({ count: 0 })
+            mockPrismaService.link.deleteMany.mockResolvedValue({ count: 3 })
+            await linkService.deleteLinks(mockDeleteTagDto)
+
+            expect(mockPrismaService.bucketLink.deleteMany).toHaveBeenCalledWith({
+                where: {
+                    linkId: {
+                        in: mockDeleteTagDto.linkId,
+                    },
+                },
+            })
+            expect(mockPrismaService.link.deleteMany).toHaveBeenCalledWith({
+                where: {
+                    linkId: {
+                        in: mockDeleteTagDto.linkId,
+                    },
+                },
+            })
+            expect(mockPrismaService.bucketLink.deleteMany).toHaveBeenCalled()
+            expect(mockPrismaService.link.deleteMany).toHaveBeenCalled()
+        })
+    })
+    describe('getLinks', () => {
+        it('should get all links', async () => {
+            const mockBodyTagDto = { tags: null }
+            const mockLinks = [
+                {
+                    linkId: 'link1',
+                    userId: 1,
+                    URL: 'test-url',
+                    title: 'Test Link 1',
+                    tags: ['web', 'mobile'],
+                    keywords: ['a', 'b'],
+                    createdAt: new Date(),
+                    views: 0,
+                    openedAt: new Date(),
+                },
+                {
+                    linkId: 'link2',
+                    userId: 1,
+                    URL: 'test-url',
+                    title: 'Test Link 2',
+                    tags: ['ai'],
+                    keywords: ['b'],
+                    createdAt: new Date(),
+                    views: 0,
+                    openedAt: new Date(),
+                },
+                {
+                    linkId: 'link3',
+                    userId: 1,
+                    URL: 'test=url',
+                    title: 'Test Link 3',
+                    tags: ['IT', 'web'],
+                    keywords: ['c'],
+                    createdAt: new Date(),
+                    views: 0,
+                    openedAt: new Date(),
+                },
+            ]
+            mockPrismaService.link.findMany.mockResolvedValue(mockLinks)
+            mockPrismaService.link.count.mockResolvedValue(3)
+            const result = await linkService.getLinks(mockPaginationQueryDto, mockBodyTagDto, userId)
+
+            expect(result.links).toEqual(mockLinks)
+            expect(result.meta).toEqual({
+                totalLinks: 3,
+                totalPages: 1,
+                hasNextPage: false,
+                hasPrevPage: false,
+                page: 1,
+                take: 10,
+                tag: [],
+            })
+            expect(prismaService.link.findMany).toHaveBeenCalledWith({
+                skip: 0,
+                take: 10,
+                where: { userId: 1 },
+                orderBy: { createdAt: 'desc' },
+            })
+        })
+        it('should get links filtered by tags', async () => {
+            const mockBody = { tags: ['web'] }
+            const mockLinks = [
+                {
+                    linkId: 'link1',
+                    userId: 1,
+                    URL: 'test-url',
+                    title: 'Test Link 1',
+                    tags: ['web', 'mobile'],
+                    createdAt: new Date(),
+                    views: 0,
+                    openedAt: new Date(),
+                },
+                {
+                    linkId: 'link3',
+                    userId: 1,
+                    URL: 'test=url',
+                    title: 'Test Link 3',
+                    tags: ['IT', 'web'],
+                    createdAt: new Date(),
+                    views: 0,
+                    openedAt: new Date(),
+                },
+            ]
+            mockPrismaService.link.findMany.mockResolvedValue(mockLinks)
+            mockPrismaService.link.count.mockResolvedValue(2)
+            const result = await linkService.getLinks(mockPaginationQueryDto, mockBody, userId)
+
+            expect(result.links).toEqual(mockLinks)
+            expect(result.meta).toEqual({
+                totalLinks: 2,
+                totalPages: 1,
+                hasNextPage: false,
+                hasPrevPage: false,
+                page: 1,
+                take: 10,
+                tag: ['web'],
+            })
+            expect(prismaService.link.findMany).toHaveBeenCalledWith({
+                skip: 0,
+                take: 10,
+                where: { userId: 1, tags: { hasSome: ['web'] } },
+                orderBy: { createdAt: 'desc' },
+            })
         })
     })
 })

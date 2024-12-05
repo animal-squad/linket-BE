@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus } from '@nestjs/common'
+import { ApiProperty } from '@nestjs/swagger'
 
 export class NotRegisterUserException extends HttpException {
     constructor() {
@@ -28,6 +29,20 @@ export class NotLoginException extends HttpException {
     }
 }
 
+export class NotLoginResponse {
+    @ApiProperty({ description: 'error name', example: 'NotLogin' })
+    name: string
+
+    @ApiProperty({ description: 'http status code', example: '401' })
+    statusCode: number
+
+    @ApiProperty({ description: 'error code', example: '602' })
+    errorCode: number
+
+    @ApiProperty({ description: 'error message', example: 'Only authorized users can access' })
+    message: string
+}
+
 export class BucketUnauthorizedUserException extends HttpException {
     constructor() {
         super(
@@ -42,6 +57,20 @@ export class BucketUnauthorizedUserException extends HttpException {
     }
 }
 
+export class BucketUnauthorizedUserResponse {
+    @ApiProperty({ description: 'error name', example: 'BucketUnauthorized' })
+    name: string
+
+    @ApiProperty({ description: 'http status code', example: 403 })
+    statusCode: number
+
+    @ApiProperty({ description: 'error message', example: 603 })
+    errorCode: number
+
+    @ApiProperty({ description: 'error message', example: 'Only authorized users can access' })
+    message: string
+}
+
 export class NotBucketOwnerException extends HttpException {
     constructor() {
         super(
@@ -54,4 +83,18 @@ export class NotBucketOwnerException extends HttpException {
             HttpStatus.FORBIDDEN,
         )
     }
+}
+
+export class NotBucketOwnerResponse {
+    @ApiProperty({ description: 'error name', example: 'NotBucketOwner' })
+    name: string
+
+    @ApiProperty({ description: 'http status code', example: 403 })
+    statusCode: number
+
+    @ApiProperty({ description: 'error code', example: 604 })
+    errorCode: number
+
+    @ApiProperty({ description: 'error message', example: 'Only Owner can make changes' })
+    message: string
 }

@@ -49,7 +49,7 @@ export class LinkService {
         })
     }
 
-    async updateTagAndTitle(updateLinkDto: UpdateLinkDto) {
+    async updateLink(updateLinkDto: UpdateLinkDto) {
         return await this.prisma.$transaction(
             updateLinkDto.links.map(link =>
                 this.prisma.link.update({
@@ -59,6 +59,7 @@ export class LinkService {
                     data: {
                         title: link.title,
                         tags: link.tags,
+                        keywords: link.keywords,
                     },
                 }),
             ),

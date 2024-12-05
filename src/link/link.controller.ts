@@ -67,11 +67,11 @@ export class LinkController {
     async createLink(@Body() createLinkDto: CreateLinkDto, @GetUser() userId: number) {
         const link = await this.linkService.createOne(createLinkDto, userId)
 
-        const aiResponse = await firstValueFrom(this.httpService.post(`${process.env.URL}/ai/categorize`, { links: [link] }, { timeout: 60000 }))
+        const aiResponse = await firstValueFrom(this.httpService.post(`${process.env.URL}/ai/extract`, { links: [link] }, { timeout: 60000 }))
 
         const updateLinkDto = aiResponse.data
 
-        return await this.linkService.updateTagAndTitle(updateLinkDto)
+        return await this.linkService.updateLink(updateLinkDto)
     }
 
     @ApiOperation({

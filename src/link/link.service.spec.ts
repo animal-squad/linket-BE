@@ -11,6 +11,7 @@ const mockLink = {
     openedAt: new Date('2024-01-02T00:00:00Z'),
     views: 0,
     tags: ['none'],
+    keywords: ['a', 'b', 'c'],
     title: 'test-title',
 }
 
@@ -66,16 +67,16 @@ describe('LinkService', () => {
 
     describe('updateTags', () => {
         it('should update tags of link', async () => {
-            const mockTags = ['test1', 'test2', 'test3']
-            const updateLink = { ...mockLink, tags: mockTags }
+            const mockBodyTagDto = { tags: ['test1', 'test2', 'test3'] }
+            const updateLink = { ...mockLink, tags: mockBodyTagDto }
 
             mockPrismaService.link.update.mockResolvedValue(updateLink)
 
-            const result = await linkService.updateTags(mockLink.linkId, mockTags)
+            const result = await linkService.updateTags(mockLink.linkId, mockBodyTagDto)
 
             expect(prismaService.link.update).toHaveBeenCalledWith({
                 where: { linkId: mockLink.linkId },
-                data: { tags: mockTags },
+                data: { tags: mockBodyTagDto.tags },
             })
             expect(result).toEqual(updateLink)
         })
@@ -83,23 +84,23 @@ describe('LinkService', () => {
 
     describe('deleteLinks', () => {
         it('should delete links and relations', async () => {
-            const mockLinkIds = ['test1', 'test2', 'test3']
+            const mockDeleteTagDto = { linkId: ['test1', 'test2', 'test3'] }
 
             mockPrismaService.bucketLink.deleteMany.mockResolvedValue({ count: 3 })
             mockPrismaService.link.deleteMany.mockResolvedValue({ count: 3 })
-            await linkService.deleteLinks(mockLinkIds)
+            await linkService.deleteLinks(mockDeleteTagDto)
 
             expect(mockPrismaService.bucketLink.deleteMany).toHaveBeenCalledWith({
                 where: {
                     linkId: {
-                        in: mockLinkIds,
+                        in: mockDeleteTagDto.linkId,
                     },
                 },
             })
             expect(mockPrismaService.link.deleteMany).toHaveBeenCalledWith({
                 where: {
                     linkId: {
-                        in: mockLinkIds,
+                        in: mockDeleteTagDto.linkId,
                     },
                 },
             })
@@ -107,23 +108,23 @@ describe('LinkService', () => {
             expect(mockPrismaService.link.deleteMany).toHaveBeenCalled()
         })
         it('should delete only links', async () => {
-            const mockLinkIds = ['test1', 'test2', 'test3']
+            const mockDeleteTagDto = { linkId: ['test1', 'test2', 'test3'] }
 
             mockPrismaService.bucketLink.deleteMany.mockResolvedValue({ count: 0 })
             mockPrismaService.link.deleteMany.mockResolvedValue({ count: 3 })
-            await linkService.deleteLinks(mockLinkIds)
+            await linkService.deleteLinks(mockDeleteTagDto)
 
             expect(mockPrismaService.bucketLink.deleteMany).toHaveBeenCalledWith({
                 where: {
                     linkId: {
-                        in: mockLinkIds,
+                        in: mockDeleteTagDto.linkId,
                     },
                 },
             })
             expect(mockPrismaService.link.deleteMany).toHaveBeenCalledWith({
                 where: {
                     linkId: {
-                        in: mockLinkIds,
+                        in: mockDeleteTagDto.linkId,
                     },
                 },
             })
@@ -133,7 +134,7 @@ describe('LinkService', () => {
     })
     describe('getLinks', () => {
         it('should get all links', async () => {
-            const bodyTags = []
+            const mockBodyTagDto = { tags: null }
             const mockLinks = [
                 {
                     linkId: 'link1',
@@ -141,6 +142,7 @@ describe('LinkService', () => {
                     URL: 'test-url',
                     title: 'Test Link 1',
                     tags: ['web', 'mobile'],
+                    keywords: ['a', 'b'],
                     createdAt: new Date(),
                     views: 0,
                     openedAt: new Date(),
@@ -151,6 +153,7 @@ describe('LinkService', () => {
                     URL: 'test-url',
                     title: 'Test Link 2',
                     tags: ['ai'],
+                    keywords: ['b'],
                     createdAt: new Date(),
                     views: 0,
                     openedAt: new Date(),
@@ -161,6 +164,7 @@ describe('LinkService', () => {
                     URL: 'test=url',
                     title: 'Test Link 3',
                     tags: ['IT', 'web'],
+                    keywords: ['c'],
                     createdAt: new Date(),
                     views: 0,
                     openedAt: new Date(),
@@ -168,7 +172,7 @@ describe('LinkService', () => {
             ]
             mockPrismaService.link.findMany.mockResolvedValue(mockLinks)
             mockPrismaService.link.count.mockResolvedValue(3)
-            const result = await linkService.getLinks(mockPaginationQueryDto, bodyTags, userId)
+            const result = await linkService.getLinks(mockPaginationQueryDto, mockBodyTagDto, userId)
 
             expect(result.links).toEqual(mockLinks)
             expect(result.meta).toEqual({
@@ -188,7 +192,7 @@ describe('LinkService', () => {
             })
         })
         it('should get links filtered by tags', async () => {
-            const bodyTags = ['web']
+            const mockBody = { tags: ['web'] }
             const mockLinks = [
                 {
                     linkId: 'link1',
@@ -213,7 +217,7 @@ describe('LinkService', () => {
             ]
             mockPrismaService.link.findMany.mockResolvedValue(mockLinks)
             mockPrismaService.link.count.mockResolvedValue(2)
-            const result = await linkService.getLinks(mockPaginationQueryDto, bodyTags, userId)
+            const result = await linkService.getLinks(mockPaginationQueryDto, mockBody, userId)
 
             expect(result.links).toEqual(mockLinks)
             expect(result.meta).toEqual({

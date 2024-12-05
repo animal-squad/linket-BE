@@ -92,6 +92,7 @@ export class BucketResponseDto {
                 openedAt: '2024-11-09T16:05:48.292Z',
                 views: 0,
                 tags: ['검색', '도구'],
+                keywords: ['검색엔진', '지식인', '뉴스'],
                 title: '네이버',
             },
         ],

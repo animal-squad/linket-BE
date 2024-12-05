@@ -9,7 +9,7 @@ import { of } from 'rxjs'
 const mockLinkService = {
     updateTags: jest.fn(),
     createOne: jest.fn(),
-    updateTagAndTitle: jest.fn(),
+    updateLink: jest.fn(),
     deleteLinks: jest.fn(),
     getLinks: jest.fn(),
 }
@@ -74,13 +74,13 @@ describe('LinkController', () => {
 
     describe('updateTags', () => {
         it('should update tags of link', async () => {
-            const mockTags = ['test1', 'test2', 'test3']
-            const updatedLink = { ...mockLink, tags: mockTags }
+            const mockBodyTagDto = { tags: ['test1', 'test2', 'test3'] }
+            const updatedLink = { ...mockLink, tags: mockBodyTagDto }
 
             mockLinkService.updateTags.mockResolvedValue(updatedLink)
-            const result = await linkController.updateTags(mockLink.linkId, mockTags, userId)
+            const result = await linkController.updateTags(mockLink.linkId, mockBodyTagDto, userId)
 
-            expect(linkService.updateTags).toHaveBeenCalledWith(mockLink.linkId, mockTags)
+            expect(linkService.updateTags).toHaveBeenCalledWith(mockLink.linkId, mockBodyTagDto)
             expect(result).toEqual(updatedLink)
         })
     })
@@ -117,22 +117,22 @@ describe('LinkController', () => {
 
             mockLinkService.createOne.mockResolvedValue(createdLink)
             mockHttpService.post.mockReturnValue(of(aiResponse))
-            mockLinkService.updateTagAndTitle.mockResolvedValue(aiResponse.data)
+            mockLinkService.updateLink.mockResolvedValue(aiResponse.data)
 
             const result = await linkController.createLink(createLinkDto, userId)
 
             expect(mockLinkService.createOne).toHaveBeenCalledWith(createLinkDto, userId)
             expect(mockHttpService.post).toHaveBeenCalledWith(expect.any(String), { links: [aiRequest] }, { timeout: 60000 })
-            expect(mockLinkService.updateTagAndTitle).toHaveBeenCalledWith(aiResponse.data)
+            expect(mockLinkService.updateLink).toHaveBeenCalledWith(aiResponse.data)
         })
     })
 
     describe('DeleteLinks', () => {
         it('should delete links', async () => {
-            const mockLinkIds = ['test-linkId1', 'test-linkId2', 'test-linkId3']
+            const mockDeleteLinkDto = { linkId: ['test-linkId1', 'test-linkId2', 'test-linkId3'] }
             mockLinkService.deleteLinks.mockResolvedValue({ count: 3 })
-            await linkController.deleteLinks(mockLinkIds, userId)
-            expect(mockLinkService.deleteLinks).toHaveBeenCalledWith(mockLinkIds)
+            await linkController.deleteLinks(mockDeleteLinkDto, userId)
+            expect(mockLinkService.deleteLinks).toHaveBeenCalledWith(mockDeleteLinkDto)
         })
     })
 
@@ -186,7 +186,7 @@ describe('LinkController', () => {
 
             mockLinkService.getLinks.mockResolvedValue(mockResult)
             const query = { page: 1, take: 10 }
-            const body = []
+            const body = null
 
             const result = await linkController.getLinks(query, body, userId)
 
@@ -233,11 +233,11 @@ describe('LinkController', () => {
 
             mockLinkService.getLinks.mockResolvedValue(mockResult)
             const query = { page: 1, take: 10 }
-            const body = ['web']
+            const mockBody = { tags: ['web'] }
 
-            const result = await linkController.getLinks(query, body, userId)
+            const result = await linkController.getLinks(query, mockBody, userId)
 
-            expect(mockLinkService.getLinks).toHaveBeenCalledWith(query, body, userId)
+            expect(mockLinkService.getLinks).toHaveBeenCalledWith(query, mockBody, userId)
             expect(result).toEqual(mockResult)
         })
     })

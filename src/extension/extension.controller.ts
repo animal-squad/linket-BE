@@ -38,16 +38,14 @@ export class ExtensionController {
             res.status(201).send(bucketId)
 
             try {
-                const aiResponse = await firstValueFrom(
-                    this.httpService.post(`${process.env.URL}/ai/categorize`, { links: links }, { timeout: 60000 }),
-                )
+                const aiResponse = await firstValueFrom(this.httpService.post(`${process.env.URL}/ai/extract`, { links: links }, { timeout: 60000 }))
 
                 if (!aiResponse.data) {
                     throw new AIResponseNoDataException()
                 }
                 const updateLinkDto = aiResponse.data
 
-                return this.linkService.updateTagAndTitle(updateLinkDto)
+                return this.linkService.updateLink(updateLinkDto)
             } catch (err) {
                 throw new ClassificationFailException()
             }

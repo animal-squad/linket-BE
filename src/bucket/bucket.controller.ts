@@ -17,9 +17,9 @@ import { ApiBody, ApiCookieAuth, ApiHeader, ApiOperation, ApiParam, ApiQuery, Ap
 import { NoSearchWordException } from './bucket.exception'
 
 @ApiTags('Bucket')
-// @ApiCookieAuth('connect.sid')
-// @ApiHeader({ name: 'Cookie', description: '세션 id가 저장된 쿠키', required: true })
-// @ApiResponse({ status: 401, description: '쿠키에 세션 정보 없음', type: NotLoginResponse })
+@ApiCookieAuth('connect.sid')
+@ApiHeader({ name: 'Cookie', description: '세션 id가 저장된 쿠키', required: true })
+@ApiResponse({ status: 401, description: '쿠키에 세션 정보 없음', type: NotLoginResponse })
 @Controller('api/bucket')
 export class BucketController {
     constructor(private readonly bucketService: BucketService) {}

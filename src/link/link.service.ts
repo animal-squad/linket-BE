@@ -220,6 +220,11 @@ export class LinkService {
         return links
     }
 
+    /**
+     * 링크 검색
+     * @param query 검색어, 페이지네이션 정보
+     * @param userId 사용자 식별자
+     */
     async searchLink(query: SearchLinkQueryDto, userId: number) {
         const page = Number(query.page) || 1
         const take = Number(query.take) || 10

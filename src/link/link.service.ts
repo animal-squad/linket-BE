@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../../prisma/prisma.service'
-import { BodyTagDto, CreateLinkDto, DeleteLinkDto, UpdateLinkDto, UpdateTitleDto } from './dto/link.dto'
+import { BodyTagDto, CreateLinkDto, DeleteLinkDto, SearchLinkQueryDto, UpdateLinkDto, UpdateTitleDto } from './dto/link.dto'
 import { PaginatedLinkDto, PaginationQueryDto } from '../utils/pagination.dto'
 import { SaveLinkFailException } from './link.exception'
 
@@ -202,7 +202,7 @@ export class LinkService {
             }),
         ])
 
-        return new PaginatedLinkDto(links, page, take, tag, totalLinks)
+        return new PaginatedLinkDto(links, page, take, totalLinks)
     }
 
     /**
@@ -218,5 +218,54 @@ export class LinkService {
             },
         })
         return links
+    }
+
+    async searchLink(query: SearchLinkQueryDto, userId: number) {
+        const page = Number(query.page) || 1
+        const take = Number(query.take) || 10
+        const searchWord = query.query
+
+        const [links, totalLinks] = await Promise.all([
+            this.prisma.link.findMany({
+                skip: (page - 1) * take,
+                take: take,
+                where: {
+                    userId: userId,
+                    OR: [
+                        {
+                            title: {
+                                contains: searchWord,
+                                mode: 'insensitive',
+                            },
+                        },
+                        {
+                            keywords: {
+                                hasSome: [searchWord],
+                            },
+                        },
+                    ],
+                },
+            }),
+            this.prisma.link.count({
+                where: {
+                    userId: userId,
+                    OR: [
+                        {
+                            title: {
+                                contains: searchWord,
+                                mode: 'insensitive',
+                            },
+                        },
+                        {
+                            keywords: {
+                                hasSome: [searchWord],
+                            },
+                        },
+                    ],
+                },
+            }),
+        ])
+
+        return new PaginatedLinkDto(links, page, take, totalLinks)
     }
 }

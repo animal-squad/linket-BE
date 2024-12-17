@@ -8,7 +8,7 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
+    "start": "nest build && pnpm sentry:sourcemaps && nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -17,7 +17,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org animal-squad-dz --project linket-be ./dist && sentry-cli sourcemaps upload --org animal-squad-dz --project linket-be ./dist"
   },
   "dependencies": {
     "@nestjs/axios": "^3.1.2",
@@ -28,6 +29,9 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.4.2",
     "@prisma/client": "^5.21.1",
+    "@sentry/cli": "^2.39.1",
+    "@sentry/nestjs": "^8.45.1",
+    "@sentry/profiling-node": "^8.45.1",
     "@types/connect-redis": "^0.0.23",
     "@types/express-session": "^1.18.0",
     "@types/ioredis": "^5.0.0",

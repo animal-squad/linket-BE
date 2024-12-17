@@ -93,7 +93,7 @@ export class LinkController {
             },
         },
     })
-    @Delete()
+    @Post('/delete')
     async deleteLinks(@Body() deleteLinkDto: DeleteLinkDto, @GetUser() userId: number) {
         return this.linkService.deleteLinks(deleteLinkDto)
     }
@@ -106,7 +106,7 @@ export class LinkController {
     @ApiBody({ type: BodyTagDto })
     @ApiResponse({ status: 200, description: '링크 조회 성공', type: PaginatedLinkDto<Link> })
     @Get()
-    async getLinks(@Query() query: PaginationQueryDto, @Body() tags: BodyTagDto, @GetUser() userId: number): Promise<PaginatedLinkDto<Link>> {
+    async getLinks(@Query() query: PaginationQueryDto, @Param() tags: BodyTagDto, @GetUser() userId: number): Promise<PaginatedLinkDto<Link>> {
         return this.linkService.getLinks(query, tags, userId)
     }
 

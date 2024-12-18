@@ -17,7 +17,9 @@ export class AllExceptionFilter implements ExceptionFilter {
             timestamp: new Date().toISOString(),
             path: request.url,
         }
-
-        response.status(httpStatus).send(responseBody)
+        console.log(responseBody)
+        if (!response.headersSent) {
+            response.status(httpStatus).send(responseBody)
+        }
     }
 }

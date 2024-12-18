@@ -1,11 +1,11 @@
 # 1. 공식 Node.js 이미지를 기반으로 사용 (필요에 따라 버전 조정)
-FROM node:18-alpine3.16
+FROM node:18-alpine
 
 # 2. pnpm을 전역으로 설치
 RUN npm install -g pnpm
 
 # 3. tzdata 패키지 설치 및 타임존 설정 추가
-RUN apk add --no-cache tzdata openssl
+RUN apk add --no-cache tzdata
 
 # 타임존을 Asia/Seoul로 설정
 ENV TZ=Asia/Seoul
@@ -37,6 +37,9 @@ RUN pnpm run build
 # 8. 애플리케이션이 사용할 포트 노출 (필요에 따라 수정)
 EXPOSE 3000
 
-# 9. 애플리케이션 실행 명령어 설정
+# 9. NODE_OPTIONS 환경 변수 설정
+ENV NODE_OPTIONS=--openssl-legacy-provider
+
+# 10. 애플리케이션 실행 명령어 설정
 CMD ["pnpm", "start"]
 

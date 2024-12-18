@@ -7,6 +7,9 @@ RUN npm install -g pnpm
 # 3. tzdata 패키지 설치 및 타임존 설정 추가
 RUN apk add --no-cache tzdata
 
+# OpenSSL 1.1 설치
+RUN apt-get update && apt-get install -y libssl1.1
+
 # 타임존을 Asia/Seoul로 설정
 ENV TZ=Asia/Seoul
 RUN cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone

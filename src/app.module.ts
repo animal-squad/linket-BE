@@ -10,6 +10,9 @@ import { PrismaModule } from '../prisma/prisma.module'
 import { BucketModule } from './bucket/bucket.module'
 import { LinkModule } from './link/link.module'
 import { ExtensionModule } from './extension/extension.module'
+import { SentryModule } from '@sentry/nestjs/setup'
+import { APP_FILTER } from '@nestjs/core'
+import { AllExceptionFilter } from './sentry.filter'
 
 @Module({
     imports: [
@@ -17,6 +20,7 @@ import { ExtensionModule } from './extension/extension.module'
             load: [config],
             isGlobal: true,
         }),
+        SentryModule.forRoot(),
         PassportModule.register({ session: true }),
         AuthModule,
         UserModule,
@@ -26,6 +30,6 @@ import { ExtensionModule } from './extension/extension.module'
         ExtensionModule,
     ],
     controllers: [AppController],
-    providers: [AppService],
+    providers: [{ provide: APP_FILTER, useClass: AllExceptionFilter }, AppService],
 })
 export class AppModule {}

@@ -20,10 +20,10 @@ export async function setUpSession(app: INestApplication, redisClient: Redis): P
             resave: false,
             cookie: {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
+                secure: false,
                 maxAge: 60 * 60 * 1000,
                 path: '/',
-                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+                sameSite: 'lax',
                 domain: configService.get('DOMAIN'),
             },
             proxy: true,

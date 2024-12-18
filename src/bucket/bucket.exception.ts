@@ -7,7 +7,7 @@ export class BucketNotFoundException extends HttpException {
             {
                 name: 'BucketNotFound',
                 statusCode: HttpStatus.NOT_FOUND,
-                errorCode: 701,
+                errorCode: 751,
                 message: 'Invalid BucketId',
             },
             HttpStatus.NOT_FOUND,
@@ -15,44 +15,16 @@ export class BucketNotFoundException extends HttpException {
     }
 }
 
-export class AIResponseNoDataException extends HttpException {
+export class NoSearchWordException extends HttpException {
     constructor() {
         super(
             {
-                name: 'AIResponseNoData',
+                name: 'NoSearchWord',
                 statusCode: HttpStatus.BAD_REQUEST,
-                errorCode: 702,
-                message: 'AI Response not found',
+                errorCode: 752,
+                message: 'Search keyword is not typed',
             },
             HttpStatus.BAD_REQUEST,
         )
     }
-}
-
-export class ClassificationFailException extends HttpException {
-    constructor() {
-        super(
-            {
-                name: 'ClassificationFail',
-                statusCode: HttpStatus.BAD_REQUEST,
-                errorCode: 703,
-                message: 'Error during AI classification operation',
-            },
-            HttpStatus.BAD_REQUEST,
-        )
-    }
-}
-
-export class ClassificationFailResponse {
-    @ApiProperty({ description: 'error name', example: 'ClassificationFail' })
-    name: string
-
-    @ApiProperty({ description: 'http status code', example: '400' })
-    statusCode: number
-
-    @ApiProperty({ description: 'error code', example: '703' })
-    errorCode: number
-
-    @ApiProperty({ description: 'error message', example: 'Error during AI classification operation' })
-    message: string
 }

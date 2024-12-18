@@ -24,7 +24,7 @@ export class AuthController {
     @UseGuards(GoogleAuthGuard)
     googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
         return req.session.save(() => {
-            res.redirect(`${process.env.URL}/main/bucket`)
+            res.redirect(`${process.env.URL}/bucket`)
         })
     }
 

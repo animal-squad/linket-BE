@@ -4,6 +4,8 @@ import { AppModule } from './app.module'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 import { setUpSession } from './session/init.session'
 import * as morgan from 'morgan'
+import * as Sentry from '@sentry/nestjs'
+import { nodeProfilingIntegration } from '@sentry/profiling-node'
 
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule)
@@ -16,6 +18,22 @@ async function bootstrap() {
         methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
         allowedHeaders: ['Content-Type', 'Accept', 'Authorization'],
         exposedHeaders: ['set-cookie'],
+    })
+
+    Sentry.init({
+        dsn: process.env.SENTRY_DSN,
+        integrations: [
+            // Add our Profiling integration
+            nodeProfilingIntegration(),
+        ],
+
+        // Add Tracing by setting tracesSampleRate
+        // We recommend adjusting this value in production
+        tracesSampleRate: 1.0,
+
+        // Set sampling rate for profiling
+        // This is relative to tracesSampleRate
+        profilesSampleRate: 1.0,
     })
 
     morgan.token('header', (req, res, param: string | number | boolean) => {
@@ -40,7 +58,7 @@ async function bootstrap() {
     await setUpSession(app, redisClient)
 
     const document = SwaggerModule.createDocument(app, config)
-    SwaggerModule.setup('api', app, document)
+    SwaggerModule.setup('document', app, document)
     await app.listen(3000)
 }
 bootstrap()

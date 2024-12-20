@@ -94,7 +94,7 @@ export class LinkController {
         },
     })
     @Post('/delete')
-    async deleteLinks(@Body() deleteLinkDto: DeleteLinkDto) {
+    async deleteLinks(@Body() deleteLinkDto: DeleteLinkDto, @GetUser() userId: number) {
         return this.linkService.deleteLinks(deleteLinkDto)
     }
 

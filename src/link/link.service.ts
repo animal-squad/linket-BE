@@ -173,10 +173,10 @@ export class LinkService {
      * @param tags 필터링 할 태그(없으면 전체 조회)
      * @param userId 사용자 식별자
      */
-    async getLinks(query: PaginationQueryDto, tags: BodyTagDto, userId: number) {
+    async getLinks(query: PaginationQueryDto, tags: string[], userId: number) {
         const page = Number(query.page) || 1
         const take = Number(query.take) || 10
-        const tag = tags.tags || []
+        const tag = tags || []
 
         const whereCondition: any = {
             userId: userId,

@@ -100,13 +100,13 @@ export class LinkController {
 
     @ApiOperation({
         summary: '링크 조회 API',
-        description: '사용자의 전체 링크 조회 또는 태그에 따른 필터된 링크 조회',
+        description: '사용자의 전체 링크 조회',
     })
     @ApiQuery({ description: '페이지네이션을 위한 정보', type: PaginationQueryDto })
-    @ApiBody({ type: BodyTagDto })
+    @ApiBody({ description: '필터링할 태그 정보, 없을 시 전체 링크 조회', type: BodyTagDto })
     @ApiResponse({ status: 200, description: '링크 조회 성공', type: PaginatedLinkDto<Link> })
-    @Get()
-    async getLinks(@Query() query: PaginationQueryDto, @Param() tags: BodyTagDto, @GetUser() userId: number): Promise<PaginatedLinkDto<Link>> {
+    @Post('/list')
+    async getLinks(@Query() query: PaginationQueryDto, @Body('tags') tags: string[], @GetUser() userId: number): Promise<PaginatedLinkDto<Link>> {
         return this.linkService.getLinks(query, tags, userId)
     }
 

@@ -82,7 +82,7 @@ export class LinkController {
     @ApiBody({ type: DeleteLinkDto })
     @ApiResponse({
         status: 200,
-        description: '태그 수정 성공',
+        description: '링크 삭제 성공',
         schema: {
             properties: {
                 count: {
@@ -94,7 +94,7 @@ export class LinkController {
         },
     })
     @Post('/delete')
-    async deleteLinks(@Body() deleteLinkDto: DeleteLinkDto, @GetUser() userId: number) {
+    async deleteLinks(@Body() deleteLinkDto: DeleteLinkDto) {
         return this.linkService.deleteLinks(deleteLinkDto)
     }
 

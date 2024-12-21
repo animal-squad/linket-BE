@@ -95,7 +95,7 @@ export class BucketService {
             linkCount: bucket.link.length,
             createdAt: bucket.createdAt,
             link: bucket.link,
-            isShared: false,
+            isShared: bucket.isShared,
         }))
         return new PaginatedBucketDto(formattedBuckets, page, take, totalBuckets)
     }

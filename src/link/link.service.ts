@@ -149,22 +149,40 @@ export class LinkService {
      * @param deleteLinkDto 삭제할 링크 식별자 모음
      */
     async deleteLinks(deleteLinkDto: DeleteLinkDto) {
-        const linkId = deleteLinkDto.linkId
+        const linkIds = deleteLinkDto.linkId
 
-        return this.prisma.$transaction([
-            this.prisma.$queryRaw`
-            UPDATE "Bucket"
-            SET link = array_remove(link, ${linkId})
-            WHERE link && ${linkId}
-        `,
-            this.prisma.link.deleteMany({
+        return this.prisma.$transaction(async tx => {
+            const deleteLinks = await tx.link.deleteMany({
                 where: {
                     linkId: {
-                        in: linkId,
+                        in: linkIds,
                     },
                 },
-            }),
-        ])
+            })
+
+            const buckets = await tx.bucket.findMany({
+                where: {
+                    link: {
+                        hasSome: linkIds,
+                    },
+                },
+            })
+
+            for (const bucket of buckets) {
+                const updateLinks = bucket.link.filter(link => !linkIds.includes(link))
+
+                await tx.bucket.update({
+                    where: {
+                        bucketId: bucket.bucketId,
+                    },
+                    data: {
+                        link: {
+                            set: updateLinks,
+                        },
+                    },
+                })
+            }
+        })
     }
 
     /**
@@ -173,10 +191,10 @@ export class LinkService {
      * @param tags 필터링 할 태그(없으면 전체 조회)
      * @param userId 사용자 식별자
      */
-    async getLinks(query: PaginationQueryDto, tags: BodyTagDto, userId: number) {
+    async getLinks(query: PaginationQueryDto, tags: string[], userId: number) {
         const page = Number(query.page) || 1
         const take = Number(query.take) || 10
-        const tag = tags.tags || []
+        const tag = tags || []
 
         const whereCondition: any = {
             userId: userId,

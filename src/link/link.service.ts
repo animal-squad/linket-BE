@@ -149,22 +149,40 @@ export class LinkService {
      * @param deleteLinkDto 삭제할 링크 식별자 모음
      */
     async deleteLinks(deleteLinkDto: DeleteLinkDto) {
-        const linkId = deleteLinkDto.linkId
+        const linkIds = deleteLinkDto.linkId
 
-        return this.prisma.$transaction([
-            this.prisma.$queryRaw`
-            UPDATE "Bucket"
-            SET link = array_remove(link, ${linkId})
-            WHERE link && ${linkId}
-        `,
-            this.prisma.link.deleteMany({
+        return this.prisma.$transaction(async tx => {
+            const deleteLinks = await tx.link.deleteMany({
                 where: {
                     linkId: {
-                        in: linkId,
+                        in: linkIds,
                     },
                 },
-            }),
-        ])
+            })
+
+            const buckets = await tx.bucket.findMany({
+                where: {
+                    link: {
+                        hasSome: linkIds,
+                    },
+                },
+            })
+
+            for (const bucket of buckets) {
+                const updateLinks = bucket.link.filter(link => !linkIds.includes(link))
+
+                await tx.bucket.update({
+                    where: {
+                        bucketId: bucket.bucketId,
+                    },
+                    data: {
+                        link: {
+                            set: updateLinks,
+                        },
+                    },
+                })
+            }
+        })
     }
 
     /**

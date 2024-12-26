@@ -142,7 +142,7 @@ export class BucketService {
      * @param userId 사용자 식별자
      */
     async createPastedBucket(bucket: BucketDto, userId: number) {
-        const newLinks = await this.linkService.createMany(bucket.links, userId)
+        const newLinks = await this.linkService.createCopyedLink(bucket.links, userId)
 
         const newBucket = await this.prisma.bucket.create({
             data: {

@@ -307,7 +307,7 @@ export class LinkService {
      * @param copyLinkDto 저장할 링크
      * @param userId 저장하는 유저 id
      */
-    async createCopyedLink(copyLinkDto: LinkDto[], userId: number) {
+    async createCopiedLink(copyLinkDto: LinkDto[], userId: number) {
         const time = new Date()
         await this.prisma.link.createMany({
             data: copyLinkDto.map(link => ({

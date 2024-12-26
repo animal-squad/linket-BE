@@ -1,6 +1,14 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../../prisma/prisma.service'
-import { BodyTagDto, CreateLinkDto, DeleteLinkDto, SearchLinkQueryDto, UpdateLinkDto, UpdateTitleDto } from './dto/link.dto'
+import {
+    BodyTagDto,
+    CreateLinkDto,
+    DeleteLinkDto,
+    LinkDto,
+    SearchLinkQueryDto,
+    UpdateLinkDto,
+    UpdateTitleDto,
+} from './dto/link.dto'
 import { PaginatedLinkDto, PaginationQueryDto } from '../utils/pagination.dto'
 import { SaveLinkFailException } from './link.exception'
 
@@ -292,5 +300,37 @@ export class LinkService {
         ])
 
         return new PaginatedLinkDto(links, page, take, totalLinks)
+    }
+
+    /**
+     * 바구니 복사할 때 링크 저장하기
+     * @param copyLinkDto 저장할 링크
+     * @param userId 저장하는 유저 id
+     */
+    async createCopiedLink(copyLinkDto: LinkDto[], userId: number) {
+        const time = new Date()
+        await this.prisma.link.createMany({
+            data: copyLinkDto.map(link => ({
+                URL: link.URL,
+                userId: userId,
+                title: link.title,
+                createdAt: time,
+                openedAt: time,
+                keywords: link.keywords,
+                tags: link.tags,
+            })),
+        })
+        return this.prisma.link.findMany({
+            where: {
+                userId,
+                URL: {
+                    in: copyLinkDto.map(link => link.URL),
+                },
+                createdAt: time,
+            },
+            select: {
+                linkId: true,
+            },
+        })
     }
 }

@@ -66,7 +66,7 @@ export class LinkService {
                     data: {
                         title: link.title,
                         tags: link.tags,
-                        keywords: link.keywords,
+                        keywords: link.keywords.map(keyword => keyword.toLowerCase()),
                     },
                 }),
             ),
@@ -265,7 +265,7 @@ export class LinkService {
                         },
                         {
                             keywords: {
-                                hasSome: [searchWord],
+                                hasSome: [searchWord.toLowerCase()],
                             },
                         },
                     ],

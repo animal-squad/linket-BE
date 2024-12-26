@@ -21,6 +21,7 @@ export class LinkService {
                     data: createLinkDto.map(link => ({
                         URL: link.URL,
                         userId: userId,
+                        title: '분류중',
                         createdAt: time,
                         openedAt: time,
                     })),
@@ -135,6 +136,7 @@ export class LinkService {
             data: {
                 URL: createLinkDto.URL,
                 userId: userId,
+                title: '분류중',
             },
         })
         return {
